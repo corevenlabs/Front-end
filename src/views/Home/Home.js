@@ -6,6 +6,7 @@ import Hero from '../../components/Hero/Hero';
 import Services from '../../components/Services/Services';
 import DesignShowcase from '../../components/DesignShowcase/DesignShowcase';
 import TechStack from '../../components/TechStack/TechStack';
+import LaudusPartnership from '../../components/LaudusPartnership/LaudusPartnership';
 import TrustedBrands from '../../components/TrustedBrands/TrustedBrands';
 import FinalTouch from '../../components/FinalTouch/FinalTouch';
 
@@ -95,6 +96,10 @@ export default function Home() {
 
         <section id="equipo" className="reveal-section">
           <TechStack />
+        </section>
+
+        <section id="alianza-laudus" className="reveal-section">
+          <LaudusPartnership />
         </section>
 
         <section id="marcas" className="reveal-section">
