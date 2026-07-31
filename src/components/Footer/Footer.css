@@ -1,4 +1,6 @@
-.minimal-footer {
+  .minimal-footer {
+    position: relative;
+    z-index: 2;
     background-color: #020617;
     padding: 40px 5% 20px 5%; /* Padding reducido notablemente */
     border-top: 1px solid rgba(255, 255, 255, 0.05); /* Línea muy fina y transparente */
