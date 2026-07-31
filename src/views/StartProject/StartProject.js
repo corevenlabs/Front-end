@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { ContactContext } from "../../context/ContactContext";
 import Seo from "../../components/Seo/Seo";
+import HeroParticles from "../../components/Hero/HeroParticles";
 import StepIndicator from "./components/StepIndicator";
 import ConfirmationScreen from "./components/ConfirmationScreen";
 import Step1Contact from "./steps/Step1Contact";
@@ -101,6 +102,10 @@ export default function StartProject() {
         description="Cuéntanos sobre tu proyecto y recibe una propuesta de Corevenlabs. Desarrollo web, integraciones y automatización a medida."
         canonical="https://www.corevenlabs.com/comenzar"
       />
+
+      <div className="start-project-particles" aria-hidden="true">
+        <HeroParticles mode={2} expanded />
+      </div>
 
       <div className="start-project-container">
         {isSubmitted ? (

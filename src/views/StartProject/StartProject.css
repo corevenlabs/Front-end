@@ -1,11 +1,44 @@
 .start-project {
+  position: relative;
+  isolation: isolate;
   min-height: 100vh;
   background-color: #020617;
   color: #fff;
   padding: 120px 5% 80px;
+  overflow: hidden;
+}
+
+.start-project::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.62);
+  pointer-events: none;
+}
+
+.start-project-particles {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.94;
+  filter: saturate(1.28) brightness(1.02) drop-shadow(0 0 24px rgba(96, 165, 250, 0.13));
+}
+
+.start-project-particles .hero-particles,
+.start-project-particles canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .start-project-container {
+  position: relative;
+  z-index: 2;
   max-width: 760px;
   margin: 0 auto;
 }
@@ -297,6 +330,10 @@
 
 /* RESPONSIVE */
 @media (max-width: 640px) {
+  .start-project-particles {
+    height: 100svh;
+    opacity: 0.76;
+  }
   .form-row {
     grid-template-columns: 1fr;
   }

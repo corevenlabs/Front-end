@@ -3,11 +3,7 @@
   overflow: hidden;
   padding: 140px 5% 110px;
   color: #f8fafc;
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-    #020617;
-  background-size: 64px 64px;
+  background: #020617;
 }
 
 .team-orb {

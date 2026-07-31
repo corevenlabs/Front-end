@@ -11,6 +11,24 @@
   flex-direction: column;
 }
 
+/* El globo se dispersa en un campo ambiental de partículas durante el scroll. */
+.home-content > :not(#inicio) {
+  position: relative;
+  z-index: 1;
+}
+
+.home-content .services,
+.home-content .showcase,
+.home-content .team,
+.home-content .trusted,
+.home-content .final-cta {
+  background-color: rgba(2, 6, 23, 0.62);
+}
+
+.home-content .laudus-partnership {
+  background: rgba(2, 6, 23, 0.62);
+}
+
 #inicio,
 #servicios,
 #diseño,
