@@ -1,0 +1,22 @@
+.form { display: flex; flex-direction: column; gap: 18px; max-width: 560px; }
+.campo { display: flex; flex-direction: column; gap: 6px; }
+.campo label { font-weight: 600; font-size: 15px; }
+.opcional { font-weight: 400; color: var(--gris-texto); }
+.campo input, .campo textarea {
+  width: 100%; min-height: 48px; padding: 12px 14px;
+  border: var(--borde); border-radius: var(--radio); background: var(--blanco);
+  font-size: 16px;
+}
+.campo textarea { resize: vertical; min-height: 110px; }
+.campo input::placeholder, .campo textarea::placeholder { color: #8b919c; }
+.campo [aria-invalid='true'] { border-color: var(--error); }
+.error, .errorGeneral { color: var(--error); font-size: 14px; }
+.errorGeneral { padding: 12px 14px; border: 1px solid #f1c4bf; border-radius: var(--radio); background: #fdf3f2; }
+.acepta { display: flex; gap: 10px; align-items: flex-start; font-size: 14.5px; color: var(--texto-cuerpo); }
+.acepta input { width: 20px; height: 20px; margin: 2px 0 0; flex: none; accent-color: var(--azul-accion); }
+.trampa { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form :global(.btn) { align-self: flex-start; min-width: 160px; }
+
+.enviado { display: flex; flex-direction: column; gap: 10px; padding: 28px; border: var(--borde); border-radius: 12px; max-width: 560px; }
+.enviado h2 { font-family: var(--f-titulo); font-weight: 800; font-stretch: 112%; font-size: 26px; }
+.check { width: 34px; height: 22px; color: var(--azul); }

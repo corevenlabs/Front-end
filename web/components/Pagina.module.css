@@ -1,0 +1,57 @@
+/* Cabecera de las páginas internas */
+.cabecera { padding-block: 40px 8px; display: flex; flex-direction: column; gap: 14px; }
+@media (min-width: 900px) { .cabecera { padding-block: 72px 16px; } }
+.titulo {
+  font-family: var(--f-titulo); font-weight: 800; font-stretch: var(--ancho-titulo);
+  font-size: clamp(30px, 6vw, 56px); line-height: 1.02; letter-spacing: -0.03em; max-width: 18ch;
+}
+.bajada { font-size: 18px; color: var(--texto-cuerpo); max-width: 58ch; }
+.migas { font-family: var(--f-mono); font-size: 12px; color: var(--gris-texto); }
+.migas a { color: var(--gris-texto); }
+
+/* Página con chat: en móvil título, chat y detalle; en escritorio el chat a la derecha desde arriba */
+.conChat {
+  display: grid; gap: 28px; padding-block: 40px var(--seccion);
+  grid-template-areas: 'cab' 'chat' 'detalle';
+}
+.conChat > .cab { grid-area: cab; display: flex; flex-direction: column; gap: 14px; }
+.conChat > .chatCol { grid-area: chat; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.conChat > .detalle { grid-area: detalle; }
+@media (min-width: 1000px) {
+  .conChat {
+    grid-template-columns: minmax(0, 1fr) 440px; column-gap: 64px; row-gap: 36px; padding-top: 72px;
+    grid-template-areas: 'cab chat' 'detalle chat'; align-items: start;
+  }
+}
+
+/* Caja de precio en las páginas de servicio */
+.cajaPrecio { display: flex; flex-direction: column; gap: 10px; padding: 24px; border: var(--borde); border-radius: 12px; }
+.cajaEtiqueta { font-family: var(--f-mono); font-size: 12px; color: var(--gris-texto); text-transform: uppercase; }
+.cajaMonto { font-family: var(--f-titulo); font-weight: 800; font-stretch: 112%; font-size: 30px; letter-spacing: -0.02em; line-height: 1.1; }
+.cajaNota { font-size: 14.5px; color: var(--gris-texto); }
+.cajaPrecio :global(.btn) { width: 100%; }
+.cajaPrecio :global(.btn-primario) { margin-top: 8px; }
+.ideal { margin-top: 20px; color: var(--texto-cuerpo); max-width: 60ch; }
+
+/* Dos columnas: texto y chat */
+.dos { display: grid; gap: 40px; padding-block: 32px var(--seccion); }
+@media (min-width: 1000px) { .dos { grid-template-columns: minmax(0, 1fr) 440px; gap: 64px; align-items: start; } }
+.icono { width: 48px; height: 48px; }
+.lista { list-style: none; margin: 0; padding: 0; border-top: var(--borde); }
+.lista li { display: flex; gap: 12px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--gris-linea); font-size: 17px; }
+.lista svg { width: 18px; height: 12px; margin-top: 7px; flex: none; color: var(--azul); }
+.botones { display: flex; flex-direction: column; gap: 10px; margin-top: 28px; }
+@media (min-width: 640px) { .botones { flex-direction: row; flex-wrap: wrap; } }
+.subtitulo { font-size: 20px; font-weight: 700; font-stretch: 108%; margin-bottom: 14px; }
+
+/* Texto legal */
+.legal { padding-block: 24px var(--seccion); max-width: 72ch; }
+.legal h2 { font-size: 21px; font-weight: 700; font-stretch: 108%; margin: 36px 0 10px; }
+.legal p, .legal li { color: var(--texto-cuerpo); }
+.legal p + p { margin-top: 10px; }
+.legal ul { padding-left: 20px; display: flex; flex-direction: column; gap: 6px; margin: 10px 0 0; }
+.legal table { width: 100%; border-collapse: collapse; font-size: 15px; margin-top: 12px; }
+.legal th, .legal td { text-align: left; vertical-align: top; padding: 10px 12px 10px 0; border-bottom: 1px solid var(--gris-linea); }
+.legal th { font-weight: 600; }
+.tabla { overflow-x: auto; }
+.actualizado { font-family: var(--f-mono); font-size: 12px; color: var(--gris-texto); }

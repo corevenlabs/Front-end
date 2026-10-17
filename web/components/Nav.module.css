@@ -1,0 +1,45 @@
+.barra {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--blanco);
+  border-bottom: 1px solid var(--gris-linea);
+}
+.fila { display: flex; align-items: center; gap: 24px; min-height: 60px; }
+.marca {
+  display: flex; align-items: center; gap: 9px;
+  font-weight: 800; font-stretch: 112%; font-size: 18px; letter-spacing: -0.01em;
+  text-decoration: none;
+}
+.logo { width: 24px; height: 25.5px; flex: none; }
+.marca:hover :global(.logo-flecha) { transform: translate(40px, -40px); }
+.marca :global(.logo-flecha) { transition: transform var(--rapido) var(--suave); }
+
+.links { display: none; gap: 28px; margin-left: auto; font-size: 15px; font-weight: 500; }
+.links a { text-decoration: none; padding-block: 6px; border-bottom: 1.5px solid transparent; }
+.links a:hover { border-bottom-color: var(--negro); }
+.fila .cta { display: none; min-height: 40px; padding: 8px 14px; font-size: 14px; }
+
+.movil { margin-left: auto; }
+.movil summary { list-style: none; cursor: pointer; padding: 12px 4px; }
+.movil summary::-webkit-details-marker { display: none; }
+.hamburguesa { width: 22px; height: 14px; display: flex; flex-direction: column; justify-content: space-between; }
+.hamburguesa i { display: block; height: 2px; background: var(--negro); transition: transform var(--rapido), opacity var(--rapido); }
+.movil[open] .hamburguesa i:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.movil[open] .hamburguesa i:nth-child(2) { opacity: 0; }
+.movil[open] .hamburguesa i:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+.panel {
+  position: absolute; left: 0; right: 0; top: 100%;
+  background: var(--blanco); border-bottom: 1px solid var(--gris-linea);
+  display: flex; flex-direction: column;
+  padding: 8px max(16px, env(safe-area-inset-right, 0px)) 20px var(--margen);
+}
+.panel a:not(:global(.btn)) {
+  padding: 14px 0; border-bottom: 1px solid var(--gris-linea);
+  text-decoration: none; font-weight: 600; font-size: 17px;
+}
+.panel :global(.btn) { margin-top: 16px; }
+
+@media (min-width: 900px) {
+  .links, .fila .cta { display: flex; }
+  .movil { display: none; }
+  .fila { min-height: 72px; }
+}

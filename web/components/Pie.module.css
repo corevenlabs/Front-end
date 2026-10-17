@@ -1,0 +1,15 @@
+.pie { background: var(--negro); color: #b9bec7; padding-block: 56px 28px; --logo-c: var(--blanco); }
+.grilla { display: grid; gap: 36px; grid-template-columns: 1fr; }
+@media (min-width: 720px) { .grilla { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1000px) { .grilla { grid-template-columns: 1.4fr 1fr 1fr 1fr 0.8fr; } }
+.marca { display: flex; flex-direction: column; gap: 14px; max-width: 34ch; font-size: 15px; }
+.logo { display: flex; align-items: center; gap: 10px; color: var(--blanco); text-decoration: none; font-weight: 800; font-stretch: 112%; font-size: 20px; }
+.c { width: 28px; height: 30px; }
+.titulo { font-family: var(--f-mono); font-size: 12px; font-weight: 500; color: #8b919c; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 12px; }
+.pie ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.pie ul a { color: var(--blanco); text-decoration: none; font-size: 15px; }
+.pie ul a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.base {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
+  margin-top: 48px; padding-top: 20px; border-top: 1px solid #2c2e33; font-size: 13px;
+}
