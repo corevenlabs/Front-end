@@ -13,6 +13,7 @@ export default async function Panel({ children }: { children: React.ReactNode })
         <nav className={s.menu} aria-label="Admin">
           <Link href="/admin">Prospectos</Link>
           <Link href="/admin/contactos">Contactos web</Link>
+          <Link href="/admin/propuestas">Propuestas</Link>
           <Link href="/admin/precios">Precios</Link>
           <a href="/" target="_blank" rel="noopener noreferrer">Ver sitio</a>
         </nav>

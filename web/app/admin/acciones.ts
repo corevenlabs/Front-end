@@ -6,9 +6,12 @@ import { exigirAdmin } from '@/lib/admin';
 import { sql } from '@/lib/db';
 import {
   CAMPOS, ESTADOS, TIPOS_CONTENIDO, actualizarProspecto, agregarNota, borrarContenido, editarContenido,
-  excluir, guardarContenido, type Campo, type Estado, type TipoContenido,
+  excluir, guardarContenido, obtenerProspecto, type Campo, type Estado, type TipoContenido,
 } from '@/lib/crm';
 import { CLAVES_PRECIO } from '@/content/precios';
+import { plantillaPorSlug } from '@/content/plantillas-propuesta';
+import { crearPropuesta as guardarPropuesta, sanear } from '@/lib/propuestas';
+import { pesos, totales } from '@/lib/propuesta';
 
 // Cada acción verifica la sesión: el proxy no basta por sí solo.
 
@@ -106,4 +109,41 @@ export async function guardarPrecios(form: FormData) {
   await db.transaction(consultas);
   revalidatePath('/', 'layout'); // regenera las páginas públicas con los precios nuevos
   redirect('/admin/precios?ok=1');
+}
+
+// Estados en los que, al enviar una propuesta, tiene sentido pasar el prospecto a «propuesta».
+const ANTES_DE_PROPUESTA = new Set<string>(['nuevo', 'para revisar', 'contactado', 'reunión']);
+
+export async function crearPropuesta(form: FormData) {
+  await exigirAdmin();
+  let crudo: unknown;
+  try {
+    crudo = JSON.parse(texto(form, 'datos', 60000));
+  } catch {
+    throw new Error('Datos de la propuesta inválidos');
+  }
+  const datos = sanear(crudo);
+  if (!datos || !plantillaPorSlug(datos.plantilla)) throw new Error('Datos de la propuesta inválidos');
+
+  const idProspecto = Number(form.get('prospecto_id'));
+  const prospecto = Number.isInteger(idProspecto) && idProspecto > 0 ? await obtenerProspecto(idProspecto) : null;
+  const propuesta = await guardarPropuesta(datos, prospecto?.id ?? null);
+
+  if (prospecto) {
+    const t = totales(datos);
+    const montos = [
+      t.unico.neto ? `${pesos(t.unico.total)} IVA incluido` : '',
+      t.mensual ? `${pesos(t.mensual.neto)} + IVA al mes` : '',
+    ].filter(Boolean).join(' y ');
+    const nota = `Propuesta ${propuesta.numero}: ${datos.titulo || plantillaPorSlug(datos.plantilla)!.nombre}${montos ? ` · ${montos}` : ''}. Vence el ${propuesta.vence.split('-').reverse().join('-')}.`;
+    if (form.get('mover_estado') && ANTES_DE_PROPUESTA.has(prospecto.estado)) {
+      await actualizarProspecto(prospecto.id, { estado: 'propuesta' }, ['nota', nota]);
+    } else {
+      await agregarNota(prospecto.id, nota);
+    }
+    revalidatePath(`/admin/prospectos/${prospecto.id}`);
+    revalidatePath('/admin');
+  }
+  revalidatePath('/admin/propuestas');
+  redirect(`/admin/propuestas/${propuesta.id}?nueva=1`);
 }

@@ -37,6 +37,7 @@ export default async function Contactos() {
                   <span className="mono">{fecha(c.recibido)}</span>
                   {c.telefono && <a href={`https://wa.me/${c.telefono.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer">Responder por WhatsApp</a>}
                   {c.correo && <a href={`mailto:${c.correo}`}>Responder por correo</a>}
+                  <Link href={`/admin/propuestas/nueva?prospecto=${c.id}`}>Nueva propuesta</Link>
                 </p>
               </li>
             );

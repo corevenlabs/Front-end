@@ -24,3 +24,20 @@ CREATE TABLE IF NOT EXISTS web.precios (
     periodo      TEXT NOT NULL,
     actualizado  TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+-- Propuestas comerciales generadas desde /admin/propuestas. "datos" guarda todo lo que se imprimió
+-- en el PDF (cliente, alcance, montos netos, forma de pago), así se puede volver a descargar igual.
+-- prospecto_id apunta a public.prospectos sin llave foránea: esa tabla es de prospecting-bot.
+CREATE TABLE IF NOT EXISTS web.propuestas (
+    id            SERIAL PRIMARY KEY,
+    numero        TEXT NOT NULL UNIQUE,   -- P-2026-001
+    prospecto_id  INTEGER,
+    plantilla     TEXT NOT NULL,
+    cliente       TEXT NOT NULL,
+    datos         JSONB NOT NULL,
+    neto          INTEGER NOT NULL DEFAULT 0,
+    emitida       DATE NOT NULL,
+    vence         DATE NOT NULL,
+    creado        TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS propuestas_prospecto ON web.propuestas (prospecto_id);

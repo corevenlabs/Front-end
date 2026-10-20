@@ -13,7 +13,7 @@ La app está en [`web/`](web/) (Next.js 16, App Router, TypeScript). Comparte la
 | `/servicios`, `/servicios/[slug]` | Agentes, páginas web, landing pages, tiendas online, SEO, integraciones, apps |
 | `/rubros/[slug]` | Una página por rubro con conversación de ejemplo |
 | `/precios`, `/contacto`, `/privacidad`, `/terminos-demo` | Lo que dice el nombre |
-| `/admin` | CRM (prospectos, ficha, notas, borradores, contactos web) y edición de precios. Protegido con contraseña, no indexable |
+| `/admin` | CRM (prospectos, ficha, notas, borradores, contactos web), propuestas en PDF y edición de precios. Protegido con contraseña, no indexable |
 | `/api/demo`, `/api/contacto` | Rutas del servidor de la demo y del formulario |
 
 ## Correr en local
@@ -55,9 +55,20 @@ Cambiar `ADMIN_SECRETO_SESION` cierra todas las sesiones abiertas.
 ## Base de datos
 
 - **CRM (esquema `public`)**: tablas de prospecting-bot (`prospectos`, `actividades`, `contenidos`, `exclusiones`, …). La web **no cambia ese esquema**; solo lee y escribe filas con las mismas reglas que `prospector/db.py`. Esas reglas están duplicadas en [`web/lib/crm.ts`](web/lib/crm.ts): si cambian en Python, hay que cambiarlas ahí.
-- **Esquema `web`** ([`web/db/esquema-web.sql`](web/db/esquema-web.sql)): `web.uso` (límites diarios de demo, formulario y login, con IP anonimizada y borrado a los 7 días) y `web.precios` (precios editables). `npm run db:web` es idempotente.
+- **Esquema `web`** ([`web/db/esquema-web.sql`](web/db/esquema-web.sql)): `web.uso` (límites diarios de demo, formulario y login, con IP anonimizada y borrado a los 7 días), `web.precios` (precios editables) y `web.propuestas` (propuestas generadas). `npm run db:web` es idempotente.
 
 El formulario de contacto crea el prospecto con `fuente = 'formulario web'` y deja una actividad con el mensaje. Si el negocio ya existe solo agrega la nota; si está en exclusiones no lo crea.
+
+## Propuestas
+
+Desde la ficha de un prospecto, desde Contactos web o desde `/admin/propuestas` → **Nueva propuesta**:
+
+1. Elegir template (uno por servicio, o «Proyecto a medida») y contacto del CRM (o ninguno).
+2. El editor carga nombre, correo, teléfono, comuna y persona de contacto del prospecto, y los precios vigentes como montos netos. Avisa lo que falta (razón social, RUT, contacto, montos…), pero se puede generar igual: el PDF omite lo vacío.
+3. Forma de pago a elección: 100%, 50/50, cuotas, personalizada o sin forma de pago.
+4. **Generar PDF** guarda la propuesta con número correlativo (`P-2026-001`), vigencia de 30 días e IVA 19%, descarga el PDF y deja una nota en el historial del prospecto (y opcionalmente lo pasa a «propuesta»). «Nueva versión» parte de una anterior con número nuevo.
+
+Los textos de cada template están en [`content/plantillas-propuesta.ts`](web/content/plantillas-propuesta.ts) y el diseño del PDF en [`lib/pdf/propuesta-pdf.tsx`](web/lib/pdf/propuesta-pdf.tsx). Las fuentes del PDF (Archivo e IBM Plex Mono, licencia OFL) están en `lib/pdf/fuentes`.
 
 ## Editar contenido
 
@@ -68,7 +79,7 @@ El formulario de contacto crea el prospecto con `fuente = 'formulario web'` y de
 | Rubros y negocios de la demo (lo único que sabe el agente) | [`content/rubros.ts`](web/content/rubros.ts) |
 | Preguntas frecuentes | [`content/faq.ts`](web/content/faq.ts) |
 | WhatsApp, Instagram, menú | [`content/sitio.ts`](web/content/sitio.ts) |
-| Datos del responsable para lo legal | [`content/legal.ts`](web/content/legal.ts) (falta razón social y RUT) |
+| Datos de la empresa (legal y propuestas) | [`content/legal.ts`](web/content/legal.ts) |
 | Colores y tipografías (web y admin) | variables en [`app/globals.css`](web/app/globals.css) |
 
 ## Desplegar en Vercel
@@ -88,6 +99,6 @@ El formulario de contacto crea el prospecto con `fuente = 'formulario web'` y de
 
 ## Pendiente antes de publicar
 
-- Razón social y RUT en `content/legal.ts`, y revisión de la política de privacidad y los términos por un abogado.
+- Revisión de la política de privacidad y los términos por un abogado.
 - Verificar el dominio en Resend.
 - Probar demo, formulario y admin con las llaves reales.

@@ -160,3 +160,57 @@
 .tablaPrecios td:first-child { font-weight: 600; min-width: 180px; }
 .tablaPrecios td:nth-child(2) { min-width: 140px; }
 .tablaPrecios td:nth-child(3) { min-width: 140px; }
+
+/* ---------- Propuestas ---------- */
+.cabezaBoton { margin-left: auto; align-self: center; min-height: 40px; padding: 8px 16px; }
+.filaPropuesta { display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; align-items: center; padding: 12px 14px; }
+.filaPropuesta .filaDatos { text-decoration: none; grid-column: 1 / -1; }
+.filaPropuesta .filaDatos:hover b { text-decoration: underline; }
+.filaPropuesta .filaDatos :global(.mono) { font-size: 13.5px; }
+@media (min-width: 760px) { .filaPropuesta { grid-template-columns: 1fr auto auto; } .filaPropuesta .filaDatos { grid-column: auto; } }
+
+.plantillas { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
+.plantilla {
+  position: relative; display: flex; flex-direction: column; gap: 3px; padding: 14px 14px 14px 42px; cursor: pointer;
+  border: 1px solid var(--gris-linea); border-radius: 10px; background: var(--blanco);
+}
+.plantilla input { position: absolute; left: 14px; top: 16px; width: 18px; height: 18px; accent-color: var(--negro); }
+.plantilla small { color: var(--gris-texto); font-size: 13px; }
+.plantilla:has(input:checked) { border-color: var(--negro); box-shadow: inset 0 0 0 1px var(--negro); }
+.plantilla:has(input:focus-visible) { outline: 3px solid var(--azul); outline-offset: 2px; }
+
+fieldset.bloque { margin: 0; min-width: 0; }
+fieldset.bloque > legend { float: left; width: 100%; padding: 0; margin-bottom: 4px; }
+fieldset.bloque > legend + * { clear: both; }
+
+.editor { display: grid; gap: 18px; grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 1000px) { .editor { grid-template-columns: minmax(0, 1fr) 320px; } }
+.editor input, .editor select, .editor textarea {
+  width: 100%; min-height: 42px; padding: 9px 12px; font-size: 15px;
+  border: 1px solid #c9cdd4; border-radius: var(--radio); background: var(--blanco);
+}
+.editor textarea { resize: vertical; line-height: 1.45; }
+.editor input[aria-invalid='true'] { border-color: #d9a520; background: #fffbef; }
+.editor input[type='radio'], .editor input[type='checkbox'] { width: 18px; min-height: 0; height: 18px; flex: none; accent-color: var(--negro); }
+.falta { margin-left: 8px; font-style: normal; font-family: var(--f-mono); font-size: 11px; font-weight: 500; color: #7a5600; background: #fdf0c8; padding: 1px 6px; border-radius: 4px; }
+.cargo { display: grid; grid-template-columns: 1fr 34px; gap: 8px 10px; align-items: end; }
+.cargo > label:first-child { grid-column: 1 / -1; }
+@media (min-width: 640px) { .cargo { grid-template-columns: 1fr 170px 34px; } .cargo > label:first-child { grid-column: auto; } }
+.quitar { width: 34px; height: 42px; border: 1px solid var(--gris-linea); border-radius: var(--radio); background: var(--blanco); font-size: 20px; color: var(--gris-texto); cursor: pointer; }
+.quitar:hover { color: var(--error); border-color: var(--error); }
+.opcionesPago { display: flex; flex-direction: column; gap: 8px; }
+.opcion { display: flex; align-items: center; gap: 10px; font-size: 15px; cursor: pointer; }
+.angosto { max-width: 180px; }
+
+.resumen { display: flex; flex-direction: column; gap: 14px; }
+@media (min-width: 1000px) { .resumen { position: sticky; top: 76px; } }
+.resumen > :global(.btn) { width: 100%; min-height: 48px; justify-content: center; }
+.cifras { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; margin: 0; font-size: 14.5px; }
+.cifras dt { color: var(--texto-cuerpo); }
+.cifras dd { margin: 0; text-align: right; font-family: var(--f-mono); font-size: 13.5px; }
+.cifras small { color: var(--gris-texto); font-family: var(--f-cuerpo, inherit); }
+.partes { list-style: none; margin: 0; padding: 10px 0 0; border-top: 1px solid var(--gris-linea); display: flex; flex-direction: column; gap: 5px; font-size: 13.5px; }
+.partes li { display: flex; justify-content: space-between; gap: 10px; }
+.partes :global(.mono) { font-size: 12.5px; }
+.alerta { padding: 14px 16px; border: 1px solid #ecd28a; background: #fff8e2; border-radius: 10px; color: #4d3a00; font-size: 14px; display: flex; flex-direction: column; gap: 6px; }
+.alerta ul { margin: 0; padding-left: 18px; }

@@ -30,6 +30,8 @@ const cabeceras = [
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   turbopack: { root: __dirname },
+  // Las fuentes del PDF de propuestas se leen del disco en tiempo de ejecución.
+  outputFileTracingIncludes: { '/admin/propuestas/*/pdf': ['./lib/pdf/fuentes/**'] },
   async headers() {
     return [
       { source: '/:path*', headers: cabeceras },

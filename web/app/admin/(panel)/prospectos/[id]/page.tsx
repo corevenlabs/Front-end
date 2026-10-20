@@ -6,6 +6,8 @@ import { exigirAdmin, fecha } from '@/lib/admin';
 import { hayBase } from '@/lib/db';
 import { Aviso, Puntaje, SinBase } from '@/components/admin/Piezas';
 import { Copiar } from '@/components/admin/Copiar';
+import { TablaPropuestas } from '@/components/admin/TablaPropuestas';
+import { listarPropuestas } from '@/lib/propuestas';
 import {
   borrarBorrador, cambiarEstado, editarBorrador, guardarDatos, noContactar, nuevaNota, nuevoBorrador,
 } from '../../../acciones';
@@ -49,7 +51,7 @@ export default async function Ficha(props: PageProps<'/admin/prospectos/[id]'>) 
   if (!Number.isInteger(id)) notFound();
   const p = await obtenerProspecto(id);
   if (!p) notFound();
-  const [historial, borradores] = await Promise.all([actividades(id), contenidos(id)]);
+  const [historial, borradores, propuestas] = await Promise.all([actividades(id), contenidos(id), listarPropuestas(id)]);
   const senales = p.senales.split(';').map((x) => x.trim()).filter(Boolean);
   const aviso = typeof ok === 'string' ? AVISOS[ok] : undefined;
 
@@ -80,6 +82,7 @@ export default async function Ficha(props: PageProps<'/admin/prospectos/[id]'>) 
             </select>
             <button className="btn btn-negro">Cambiar</button>
           </form>
+          <Link href={`/admin/propuestas/nueva?prospecto=${p.id}`} className="btn btn-primario">Nueva propuesta</Link>
         </div>
       </header>
 
@@ -93,6 +96,13 @@ export default async function Ficha(props: PageProps<'/admin/prospectos/[id]'>) 
             {p.que_ofrecer && <><h3>Qué ofrecerle</h3><p>{p.que_ofrecer}</p></>}
             {p.demo_idea && <><h3>Idea de demo</h3><p>{p.demo_idea}</p></>}
             {p.canal_sugerido && <p className={s.tenue}>Canal sugerido: <b>{p.canal_sugerido}</b></p>}
+          </section>
+
+          <section className={s.bloque} id="propuestas">
+            <h2>Propuestas <span className="mono">{propuestas.length}</span></h2>
+            {propuestas.length
+              ? <TablaPropuestas lista={propuestas} conCliente={false} />
+              : <p className={s.tenue}>Sin propuestas. Usa «Nueva propuesta» para armar una con los datos de este prospecto.</p>}
           </section>
 
           <section className={s.bloque} id="borradores">
