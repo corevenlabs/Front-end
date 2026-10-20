@@ -41,3 +41,22 @@ CREATE TABLE IF NOT EXISTS web.propuestas (
     creado        TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS propuestas_prospecto ON web.propuestas (prospecto_id);
+
+-- Ajustes del sitio editables desde /admin/sitio (por ahora, el número de WhatsApp).
+-- Si una clave no está, el sitio usa el valor por defecto de content/sitio.ts.
+CREATE TABLE IF NOT EXISTS web.ajustes (
+    clave        TEXT PRIMARY KEY,
+    valor        TEXT NOT NULL,
+    actualizado  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- Preguntas frecuentes de la portada, editables desde /admin/sitio.
+-- Mientras la tabla esté vacía, el sitio muestra las de content/faq.ts.
+CREATE TABLE IF NOT EXISTS web.preguntas (
+    id           SERIAL PRIMARY KEY,
+    pregunta     TEXT NOT NULL,
+    respuesta    TEXT NOT NULL,
+    orden        INTEGER NOT NULL DEFAULT 0,
+    visible      BOOLEAN NOT NULL DEFAULT true,
+    actualizado  TIMESTAMPTZ NOT NULL DEFAULT now()
+);

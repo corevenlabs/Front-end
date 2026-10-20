@@ -3,15 +3,19 @@ export const SITIO = {
   url: 'https://www.corevenlabs.com',
   descripcion:
     'Agentes de atención y venta para WhatsApp e Instagram, páginas web, tiendas online, SEO, integraciones y apps móviles para pymes en Chile.',
-  whatsapp: '56979242216',
+  whatsapp: '56979242216', // por defecto; el vigente está en web.ajustes
   instagram: 'https://instagram.com/corevenlabs',
   ciudad: 'Santiago',
   pais: 'CL',
   zonaHoraria: 'America/Santiago',
 };
 
-export function enlaceWhatsapp(texto = 'Hola, quiero un agente para mi negocio') {
-  return `https://wa.me/${SITIO.whatsapp}?text=${encodeURIComponent(texto)}`;
+export const MENSAJE_WHATSAPP = 'Hola, quiero un agente para mi negocio';
+
+// Enlace interno que redirige a WhatsApp con el número vigente (editable en /admin/sitio).
+// SITIO.whatsapp es solo el valor por defecto.
+export function enlaceWhatsapp(texto = MENSAJE_WHATSAPP) {
+  return texto === MENSAJE_WHATSAPP ? '/whatsapp' : `/whatsapp?texto=${encodeURIComponent(texto)}`;
 }
 
 export const MENU = [

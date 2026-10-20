@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { Hero, Banda, QueHace, Rubros, ComoFunciona, Precios, Servicios, Preguntas, Laudus, Cierre } from '@/components/Secciones';
 import { JsonLd } from '@/components/JsonLd';
 import { negociosParaDemo } from '@/lib/demo';
-import { PREGUNTAS } from '@/content/faq';
-import { SITIO, enlaceWhatsapp } from '@/content/sitio';
+import { SITIO } from '@/content/sitio';
+import { obtenerPreguntas, obtenerWhatsapp } from '@/lib/ajustes';
 
 export const metadata: Metadata = {
   title: { absolute: 'Agentes de WhatsApp e Instagram para pymes en Chile | Corevenlabs' },
@@ -13,33 +13,34 @@ export const metadata: Metadata = {
   openGraph: { url: '/', title: 'Le compran al que contesta primero | Corevenlabs' },
 };
 
-const negocio = {
+const negocio = (whatsapp: string) => ({
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
   name: SITIO.nombre,
   url: SITIO.url,
   logo: `${SITIO.url}/icon.svg`,
   description: SITIO.descripcion,
-  telephone: `+${SITIO.whatsapp}`,
+  telephone: `+${whatsapp}`,
   areaServed: { '@type': 'Country', name: 'Chile' },
   address: { '@type': 'PostalAddress', addressLocality: SITIO.ciudad, addressCountry: SITIO.pais },
-  sameAs: [SITIO.instagram, enlaceWhatsapp()],
-};
+  sameAs: [SITIO.instagram, `https://wa.me/${whatsapp}`],
+});
 
-const faq = {
+const faq = (preguntas: { p: string; r: string }[]) => ({
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: PREGUNTAS.map((q) => ({
+  mainEntity: preguntas.map((q) => ({
     '@type': 'Question',
     name: q.p,
     acceptedAnswer: { '@type': 'Answer', text: q.r },
   })),
-};
+});
 
-export default function Inicio() {
+export default async function Inicio() {
+  const [whatsapp, preguntas] = await Promise.all([obtenerWhatsapp(), obtenerPreguntas()]);
   return (
     <>
-      <JsonLd datos={[negocio, faq]} />
+      <JsonLd datos={preguntas.length ? [negocio(whatsapp), faq(preguntas)] : [negocio(whatsapp)]} />
       <Hero negocios={negociosParaDemo()} />
       <Banda />
       <QueHace />

@@ -13,8 +13,9 @@ La app está en [`web/`](web/) (Next.js 16, App Router, TypeScript). Comparte la
 | `/servicios`, `/servicios/[slug]` | Agentes, páginas web, landing pages, tiendas online, SEO, integraciones, apps |
 | `/rubros/[slug]` | Una página por rubro con conversación de ejemplo |
 | `/precios`, `/contacto`, `/privacidad`, `/terminos-demo` | Lo que dice el nombre |
-| `/admin` | CRM (prospectos, ficha, notas, borradores, contactos web), propuestas en PDF y edición de precios. Protegido con contraseña, no indexable |
+| `/admin` | CRM (prospectos, ficha, notas, borradores, contactos web), propuestas en PDF, precios, WhatsApp y preguntas frecuentes. Protegido con contraseña, no indexable |
 | `/api/demo`, `/api/contacto` | Rutas del servidor de la demo y del formulario |
+| `/whatsapp` | Redirige a WhatsApp con el número vigente (lo usan todos los botones del sitio) |
 
 ## Correr en local
 
@@ -55,7 +56,7 @@ Cambiar `ADMIN_SECRETO_SESION` cierra todas las sesiones abiertas.
 ## Base de datos
 
 - **CRM (esquema `public`)**: tablas de prospecting-bot (`prospectos`, `actividades`, `contenidos`, `exclusiones`, …). La web **no cambia ese esquema**; solo lee y escribe filas con las mismas reglas que `prospector/db.py`. Esas reglas están duplicadas en [`web/lib/crm.ts`](web/lib/crm.ts): si cambian en Python, hay que cambiarlas ahí.
-- **Esquema `web`** ([`web/db/esquema-web.sql`](web/db/esquema-web.sql)): `web.uso` (límites diarios de demo, formulario y login, con IP anonimizada y borrado a los 7 días), `web.precios` (precios editables) y `web.propuestas` (propuestas generadas). `npm run db:web` es idempotente.
+- **Esquema `web`** ([`web/db/esquema-web.sql`](web/db/esquema-web.sql)): `web.uso` (límites diarios de demo, formulario y login, con IP anonimizada y borrado a los 7 días), `web.precios` (precios editables), `web.propuestas` (propuestas generadas), `web.ajustes` (número de WhatsApp) y `web.preguntas` (preguntas frecuentes). `npm run db:web` es idempotente.
 
 El formulario de contacto crea el prospecto con `fuente = 'formulario web'` y deja una actividad con el mensaje. Si el negocio ya existe solo agrega la nota; si está en exclusiones no lo crea.
 
@@ -77,8 +78,9 @@ Los textos de cada template están en [`content/plantillas-propuesta.ts`](web/co
 | Precios | `/admin/precios` (los valores por defecto están en [`content/precios.ts`](web/content/precios.ts)) |
 | Servicios | [`content/servicios.ts`](web/content/servicios.ts) |
 | Rubros y negocios de la demo (lo único que sabe el agente) | [`content/rubros.ts`](web/content/rubros.ts) |
-| Preguntas frecuentes | [`content/faq.ts`](web/content/faq.ts) |
-| WhatsApp, Instagram, menú | [`content/sitio.ts`](web/content/sitio.ts) |
+| Preguntas frecuentes | `/admin/sitio` (mientras no se editen, se muestran las de [`content/faq.ts`](web/content/faq.ts)) |
+| Número de WhatsApp | `/admin/sitio` (el de [`content/sitio.ts`](web/content/sitio.ts) es solo el valor por defecto) |
+| Instagram, menú | [`content/sitio.ts`](web/content/sitio.ts) |
 | Datos de la empresa (legal y propuestas) | [`content/legal.ts`](web/content/legal.ts) |
 | Colores y tipografías (web y admin) | variables en [`app/globals.css`](web/app/globals.css) |
 

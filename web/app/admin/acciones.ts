@@ -12,6 +12,9 @@ import { CLAVES_PRECIO } from '@/content/precios';
 import { plantillaPorSlug } from '@/content/plantillas-propuesta';
 import { crearPropuesta as guardarPropuesta, sanear } from '@/lib/propuestas';
 import { pesos, totales } from '@/lib/propuesta';
+import {
+  borrarPregunta, crearPregunta, editarPregunta, guardarWhatsapp, moverPregunta, normalizarWhatsapp, sembrarPreguntas,
+} from '@/lib/ajustes';
 
 // Cada acción verifica la sesión: el proxy no basta por sí solo.
 
@@ -146,4 +149,56 @@ export async function crearPropuesta(form: FormData) {
   }
   revalidatePath('/admin/propuestas');
   redirect(`/admin/propuestas/${propuesta.id}?nueva=1`);
+}
+
+// --- Sitio: WhatsApp y preguntas frecuentes (/admin/sitio) ---
+
+function volverSitio(aviso: string, ancla = ''): never {
+  revalidatePath('/', 'layout'); // regenera las páginas públicas
+  redirect(`/admin/sitio?ok=${aviso}${ancla}`);
+}
+
+export async function guardarWhatsappSitio(form: FormData) {
+  await exigirAdmin();
+  const numero = normalizarWhatsapp(texto(form, 'whatsapp', 40));
+  if (!numero) redirect('/admin/sitio?error=whatsapp');
+  await guardarWhatsapp(numero);
+  volverSitio('whatsapp');
+}
+
+function datosPregunta(form: FormData) {
+  return { pregunta: texto(form, 'pregunta', 300).trim(), respuesta: texto(form, 'respuesta', 2000).trim() };
+}
+
+export async function nuevaPregunta(form: FormData) {
+  await exigirAdmin();
+  const { pregunta, respuesta } = datosPregunta(form);
+  if (pregunta && respuesta) await crearPregunta(pregunta, respuesta);
+  volverSitio('pregunta', '#preguntas');
+}
+
+export async function guardarPregunta(form: FormData) {
+  await exigirAdmin();
+  const id = idDe(form);
+  const { pregunta, respuesta } = datosPregunta(form);
+  if (pregunta && respuesta) await editarPregunta(id, pregunta, respuesta, form.get('visible') === 'on');
+  volverSitio('pregunta', '#preguntas');
+}
+
+export async function quitarPregunta(form: FormData) {
+  await exigirAdmin();
+  await borrarPregunta(idDe(form));
+  volverSitio('borrada', '#preguntas');
+}
+
+export async function ordenarPregunta(form: FormData) {
+  await exigirAdmin();
+  await moverPregunta(idDe(form), form.get('direccion') === 'subir' ? 'subir' : 'bajar');
+  volverSitio('orden', '#preguntas');
+}
+
+export async function editarPreguntasActuales() {
+  await exigirAdmin();
+  await sembrarPreguntas();
+  volverSitio('copiadas', '#preguntas');
 }

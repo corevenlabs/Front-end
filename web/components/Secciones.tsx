@@ -8,7 +8,7 @@ import { RUBROS } from '@/content/rubros';
 import { SERVICIOS } from '@/content/servicios';
 import { DETALLE_AGENTE, NOTA_PRECIOS, pesos, textoPrecio } from '@/content/precios';
 import { clavePrecioDeServicio, obtenerPrecios } from '@/lib/precios';
-import { PREGUNTAS } from '@/content/faq';
+import { obtenerPreguntas } from '@/lib/ajustes';
 import { enlaceWhatsapp } from '@/content/sitio';
 import s from './Secciones.module.css';
 
@@ -251,13 +251,15 @@ export async function Precios({ conTitulo = true, conOtros = false }: { conTitul
   );
 }
 
-export function Preguntas() {
+export async function Preguntas() {
+  const preguntas = await obtenerPreguntas();
+  if (!preguntas.length) return null;
   return (
     <section className="seccion" id="preguntas" aria-labelledby="preguntas-titulo">
       <div className={`contenedor ${s.preguntasGrilla}`}>
         <h2 id="preguntas-titulo" className="titulo-seccion">Preguntas frecuentes</h2>
         <div className={s.preguntas}>
-          {PREGUNTAS.map((q) => (
+          {preguntas.map((q) => (
             <details key={q.p} className={s.pregunta}>
               <summary>{q.p}<span className={s.mas} aria-hidden="true" /></summary>
               <p>{q.r}</p>

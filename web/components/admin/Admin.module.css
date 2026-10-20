@@ -214,3 +214,25 @@ fieldset.bloque > legend + * { clear: both; }
 .partes :global(.mono) { font-size: 12.5px; }
 .alerta { padding: 14px 16px; border: 1px solid #ecd28a; background: #fff8e2; border-radius: 10px; color: #4d3a00; font-size: 14px; display: flex; flex-direction: column; gap: 6px; }
 .alerta ul { margin: 0; padding-left: 18px; }
+
+/* ---------- Sitio: WhatsApp y preguntas ---------- */
+.sitio { display: flex; flex-direction: column; gap: 18px; max-width: 860px; }
+.sitio .cabeza { margin-bottom: 0; }
+.formFila { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; }
+.formFila .campo { flex: 1 1 240px; }
+.formFila input { width: 100%; min-height: 42px; padding: 9px 12px; font-size: 15px; border: 1px solid #c9cdd4; border-radius: var(--radio); background: var(--blanco); }
+.formFila input[aria-invalid='true'] { border-color: var(--error); }
+.formFila :global(.btn) { min-height: 42px; }
+.sitio a { color: var(--azul-accion); font-weight: 600; }
+.listaPreguntas { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.itemPregunta { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-top: 1px solid var(--gris-linea); }
+.itemPregunta > div:not(.flechas) { min-width: 0; }
+.itemPregunta p { margin-top: 2px; }
+.flechas { display: flex; flex-direction: column; gap: 4px; flex: none; }
+.flecha { width: 30px; height: 26px; border: 1px solid var(--gris-linea); border-radius: 6px; background: var(--blanco); cursor: pointer; font-size: 14px; line-height: 1; }
+.flecha:hover:not(:disabled) { border-color: var(--negro); }
+.flecha:disabled { opacity: .35; cursor: default; }
+.preguntaEditable { flex: 1; min-width: 0; }
+.preguntaEditable > summary { cursor: pointer; display: flex; gap: 10px; align-items: center; justify-content: space-between; padding: 4px 0; font-size: 15px; }
+.preguntaEditable[open] > summary { margin-bottom: 10px; }
+.preguntaEditable .opcion input { width: 18px; height: 18px; min-height: 0; accent-color: var(--negro); }

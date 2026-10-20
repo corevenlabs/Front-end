@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { FormularioContacto } from '@/components/FormularioContacto';
 import { Flecha } from '@/components/Iconos';
-import { enlaceWhatsapp, SITIO } from '@/content/sitio';
+import { enlaceWhatsapp } from '@/content/sitio';
+import { formatearWhatsapp, obtenerWhatsapp } from '@/lib/ajustes';
 import s from '@/components/Pagina.module.css';
 
 export const metadata: Metadata = {
@@ -11,7 +12,8 @@ export const metadata: Metadata = {
   openGraph: { url: '/contacto' },
 };
 
-export default function Contacto() {
+export default async function Contacto() {
+  const whatsapp = await obtenerWhatsapp();
   return (
     <>
       <div className={`contenedor ${s.cabecera}`}>
@@ -25,7 +27,7 @@ export default function Contacto() {
           <h2 className={s.subtitulo} style={{ marginBottom: 0 }}>¿Más rápido?</h2>
           <p className="bajada" style={{ fontSize: 16 }}>Escríbenos por WhatsApp y conversamos ahí mismo.</p>
           <a className="btn btn-secundario" style={{ alignSelf: 'flex-start' }} href={enlaceWhatsapp()} target="_blank" rel="noopener noreferrer">
-            WhatsApp +{SITIO.whatsapp.slice(0, 2)} {SITIO.whatsapp.slice(2, 3)} {SITIO.whatsapp.slice(3, 7)} {SITIO.whatsapp.slice(7)} <Flecha />
+            WhatsApp {formatearWhatsapp(whatsapp)} <Flecha />
           </a>
         </aside>
       </div>
