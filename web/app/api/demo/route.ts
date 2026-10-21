@@ -27,12 +27,12 @@ export async function POST(req: Request) {
   if (!rubro?.enDemo || ultimo?.de !== 'cliente') return json({ error: 'Solicitud no válida.' }, 400);
 
   if (historial.length > MAX_TURNOS_CONVERSACION) {
-    return json({ respuesta: 'Esta conversación de prueba llegó a su largo máximo. Cambia de negocio o recarga la página para empezar otra.' });
+    return json({ respuesta: 'Esta conversación de prueba llegó a su largo máximo. Cambie de negocio o recargue la página para empezar otra.' });
   }
 
   // Sin llave de Anthropic (por ejemplo en local): solo preguntas sugeridas.
   if (!hayLlave()) {
-    return json({ respuesta: respuestaSinIA(rubro.slug, ultimo.texto) ?? 'La demo con IA no está activa en este momento. Prueba con las preguntas sugeridas.' });
+    return json({ respuesta: respuestaSinIA(rubro.slug, ultimo.texto) ?? 'La demo con IA no está activa en este momento. Pruebe con las preguntas sugeridas.' });
   }
 
   const limite = await registrarUso('demo', ipDe(req)).catch((e) => {
@@ -40,11 +40,11 @@ export async function POST(req: Request) {
     return 'global' as const; // si la base falla, no gastamos IA a ciegas
   });
   if (limite === 'visitante') {
-    return json({ error: 'Llegaste al límite de mensajes de la demo por hoy. Si quieres seguir conversando, escríbenos por WhatsApp.' }, 429);
+    return json({ error: 'Alcanzó el límite de mensajes de la demo por hoy. Si quiere seguir conversando, escríbanos por WhatsApp.' }, 429);
   }
   if (limite === 'global') {
     const sugerida = respuestaSinIA(rubro.slug, ultimo.texto);
-    return json({ respuesta: sugerida ?? 'La demo llegó a su límite de mensajes por hoy. Puedes probar las preguntas sugeridas o volver mañana.' });
+    return json({ respuesta: sugerida ?? 'La demo llegó a su límite de mensajes por hoy. Puede probar las preguntas sugeridas o volver mañana.' });
   }
 
   // El modelo debe recibir una conversación que empiece por el cliente.
@@ -59,7 +59,7 @@ export async function POST(req: Request) {
   const sugerida = respuestaSinIA(rubro.slug, ultimo.texto);
   if (sugerida) return json({ respuesta: sugerida });
   return json(
-    { error: r.motivo === 'saturado' ? 'El agente está con mucha demanda. Intenta de nuevo en unos segundos.' : 'No pude responder ahora. Intenta de nuevo en un momento.' },
+    { error: r.motivo === 'saturado' ? 'El agente está con mucha demanda. Intente de nuevo en unos segundos.' : 'No pude responder ahora. Intente de nuevo en un momento.' },
     503,
   );
 }

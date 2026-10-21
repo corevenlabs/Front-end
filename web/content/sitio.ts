@@ -5,6 +5,7 @@ export const SITIO = {
     'Agentes de atención y venta para WhatsApp e Instagram, páginas web, tiendas online, SEO, integraciones y apps móviles para pymes en Chile.',
   whatsapp: '56979242216', // por defecto; el vigente está en web.ajustes
   instagram: 'https://instagram.com/corevenlabs',
+  laudus: 'https://laudus.cl/alianzas/coveren-labs/', // ficha de partner en Laudus
   ciudad: 'Santiago',
   pais: 'CL',
   zonaHoraria: 'America/Santiago',

@@ -22,12 +22,14 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITIO.url),
   title: {
-    default: 'Agentes de WhatsApp e Instagram para pymes | Corevenlabs',
+    default: 'Chatbot de WhatsApp con IA para pymes | Corevenlabs',
     template: '%s | Corevenlabs',
   },
   description: SITIO.descripcion,
   openGraph: { type: 'website', locale: 'es_CL', siteName: SITIO.nombre },
   twitter: { card: 'summary_large_image' },
+  // Código de verificación de Google Search Console (opción «Etiqueta HTML»), si se configura.
+  ...(process.env.GOOGLE_SITE_VERIFICATION && { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } }),
 };
 
 export const viewport: Viewport = { themeColor: '#ffffff', width: 'device-width', initialScale: 1 };

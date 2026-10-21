@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { metadatos, migas } from '@/lib/seo';
+import { JsonLd } from '@/components/JsonLd';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ChatDemo } from '@/components/ChatDemo';
@@ -20,12 +22,13 @@ export async function generateMetadata(props: PageProps<'/rubros/[slug]'>): Prom
   const { slug } = await props.params;
   const rubro = rubroPorSlug(slug);
   if (!rubro) return {};
-  return {
-    title: rubro.titulo,
-    description: `${rubro.bajada} Mira una conversación de ejemplo.`,
-    alternates: { canonical: `/rubros/${rubro.slug}` },
-    openGraph: { url: `/rubros/${rubro.slug}`, title: `${rubro.titulo} | Corevenlabs` },
-  };
+  const extra = ' Incluye una conversación de ejemplo.';
+  return metadatos({
+    ruta: `/rubros/${rubro.slug}`,
+    titulo: rubro.tituloSeo ?? rubro.titulo,
+    tituloSocial: rubro.titulo,
+    descripcion: rubro.bajada.length + extra.length <= 158 ? rubro.bajada + extra : rubro.bajada,
+  });
 }
 
 export default async function PaginaRubro(props: PageProps<'/rubros/[slug]'>) {
@@ -35,6 +38,7 @@ export default async function PaginaRubro(props: PageProps<'/rubros/[slug]'>) {
 
   return (
     <>
+      <JsonLd datos={migas([rubro.nombre, `/rubros/${rubro.slug}`])} />
       <div className={`contenedor ${s.conChat}`}>
         <div className={s.cab}>
           <p className={s.migas}><Link href="/#rubros">Rubros</Link> / {rubro.nombre}</p>
@@ -52,7 +56,7 @@ export default async function PaginaRubro(props: PageProps<'/rubros/[slug]'>) {
         </div>
 
         <div className={s.detalle}>
-          <h2 className={s.subtitulo}>Qué hace el agente en tu {rubro.tuNegocio}</h2>
+          <h2 className={s.subtitulo}>Qué hace el agente en {rubro.enNegocio}</h2>
           <ul className={s.lista}>
             {rubro.tareas.map((t) => (
               <li key={t}><DobleCheck />{t}</li>

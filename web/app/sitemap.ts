@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next';
+import { GUIAS } from '@/content/guias';
 import { RUBROS } from '@/content/rubros';
 import { SERVICIOS } from '@/content/servicios';
 import { SITIO } from '@/content/sitio';
@@ -12,6 +13,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     pagina('/servicios', 0.8),
     ...SERVICIOS.map((sv) => pagina(`/servicios/${sv.slug}`, 0.8)),
     ...RUBROS.map((r) => pagina(`/rubros/${r.slug}`, 0.7)),
+    pagina('/guias', 0.6),
+    ...GUIAS.map((g) => pagina(`/guias/${g.slug}`, 0.7)),
     pagina('/contacto', 0.6),
     pagina('/privacidad', 0.2),
     pagina('/terminos-demo', 0.2),

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { metadatos } from '@/lib/seo';
 import { Precios, Preguntas, Cierre } from '@/components/Secciones';
 import { textoPrecio } from '@/content/precios';
 import { obtenerPrecios } from '@/lib/precios';
@@ -6,12 +7,11 @@ import s from '@/components/Pagina.module.css';
 
 export async function generateMetadata(): Promise<Metadata> {
   const p = await obtenerPrecios();
-  return {
-    title: 'Precios: agentes de WhatsApp, páginas web y tiendas online',
-    description: `Agente de WhatsApp: implementación ${textoPrecio(p['agente-implementacion'])} y mensualidad ${textoPrecio(p['agente-mensualidad'])}. Páginas web, landing pages y tiendas online con precios desde.`,
-    alternates: { canonical: '/precios' },
-    openGraph: { url: '/precios' },
-  };
+  return metadatos({
+    ruta: '/precios',
+    titulo: 'Precios de agentes de WhatsApp y páginas web',
+    descripcion: `Agente de WhatsApp: implementación ${textoPrecio(p['agente-implementacion'])} y mensualidad ${textoPrecio(p['agente-mensualidad'])}. Páginas web, landing pages y tiendas online con precios publicados.`,
+  });
 }
 
 export default function PaginaPrecios() {
@@ -20,7 +20,7 @@ export default function PaginaPrecios() {
       <div className={`contenedor ${s.cabecera}`}>
         <p className="etiqueta">Precios</p>
         <h1 className={s.titulo}>Precios claros, sin letra chica</h1>
-        <p className={s.bajada}>Precios «desde» para que sepas de qué estamos hablando antes de conversar. El valor final depende de tu proyecto y te lo damos por escrito.</p>
+        <p className={s.bajada}>Precios «desde» para conocer los valores antes de conversar. El monto final depende de cada proyecto y se entrega por escrito.</p>
       </div>
       <Precios conOtros />
       <Preguntas />

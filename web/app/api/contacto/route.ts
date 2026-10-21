@@ -11,7 +11,7 @@ function json(datos: object, status = 200) {
   return NextResponse.json(datos, { status, headers: { 'Cache-Control': 'no-store' } });
 }
 
-const ERROR_GENERAL = 'No pudimos enviar tu mensaje. Intenta de nuevo o escríbenos por WhatsApp.';
+const ERROR_GENERAL = 'No pudimos enviar su mensaje. Intente de nuevo o escríbanos por WhatsApp.';
 
 export async function POST(req: Request) {
   if (!mismoOrigen(req)) return json({ error: 'Origen no permitido.' }, 403);
@@ -32,14 +32,14 @@ export async function POST(req: Request) {
     acepta: cuerpo.acepta === true,
   };
   const errores = validar(datos);
-  if (Object.keys(errores).length) return json({ error: 'Revisa los campos marcados.', errores }, 422);
+  if (Object.keys(errores).length) return json({ error: 'Revise los campos marcados.', errores }, 422);
 
   const limite = await registrarUso('contacto', ipDe(req)).catch((e) => {
     console.error('[contacto] No se pudo registrar el uso:', e);
     return 'ok' as const; // un contacto real vale más que un límite caído
   });
   if (limite !== 'ok') {
-    return json({ error: 'Recibimos varios mensajes desde tu conexión hoy. Escríbenos por WhatsApp y te respondemos ahí.' }, 429);
+    return json({ error: 'Recibimos varios mensajes desde su conexión hoy. Escríbanos por WhatsApp y le respondemos por ahí.' }, 429);
   }
 
   const esCorreo = tipoContacto(datos.contacto) === 'correo';

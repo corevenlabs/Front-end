@@ -12,6 +12,7 @@ La app está en [`web/`](web/) (Next.js 16, App Router, TypeScript). Comparte la
 | `/demo` | Demo del agente con 3 negocios ficticios (ramen, joyería, remodelación) |
 | `/servicios`, `/servicios/[slug]` | Agentes, páginas web, landing pages, tiendas online, SEO, integraciones, apps |
 | `/rubros/[slug]` | Una página por rubro con conversación de ejemplo |
+| `/guias`, `/guias/[slug]` | Guías largas para Google (hoy: chatbot de WhatsApp para empresas) |
 | `/precios`, `/contacto`, `/privacidad`, `/terminos-demo` | Lo que dice el nombre |
 | `/admin` | CRM (prospectos, ficha, notas, borradores, contactos web), propuestas en PDF, precios, WhatsApp y preguntas frecuentes. Protegido con contraseña, no indexable |
 | `/api/demo`, `/api/contacto` | Rutas del servidor de la demo y del formulario |
@@ -50,6 +51,7 @@ Todas viven solo en el servidor. Ninguna llega al navegador.
 | `ADMIN_USUARIO` | Usuario del admin | `orlando` |
 | `ADMIN_CLAVE_HASH` | Hash scrypt de la contraseña | lo genera `npm run admin:clave` |
 | `ADMIN_SECRETO_SESION` | Firma de la cookie de sesión (mínimo 32 caracteres) | `node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"` |
+| `GOOGLE_SITE_VERIFICATION` | Opcional: verificación de Google Search Console | el valor `content` de la etiqueta HTML que entrega Search Console |
 
 Cambiar `ADMIN_SECRETO_SESION` cierra todas las sesiones abiertas.
 
@@ -73,11 +75,15 @@ Los textos de cada template están en [`content/plantillas-propuesta.ts`](web/co
 
 ## Editar contenido
 
+Tono de los textos: formal e impersonal («Los clientes escriben…»), sin tutear al visitante; «usted» cuando hay que dirigirse a él. «Escríbenos» se mantiene en los botones.
+
+
 | Qué | Dónde |
 |---|---|
 | Precios | `/admin/precios` (los valores por defecto están en [`content/precios.ts`](web/content/precios.ts)) |
 | Servicios | [`content/servicios.ts`](web/content/servicios.ts) |
 | Rubros y negocios de la demo (lo único que sabe el agente) | [`content/rubros.ts`](web/content/rubros.ts) |
+| Guías (textos, preguntas, tablas) | [`content/guias.ts`](web/content/guias.ts): una guía nueva es agregar un objeto a la lista; la plantilla, el sitemap y los datos para Google se arman solos |
 | Preguntas frecuentes | `/admin/sitio` (mientras no se editen, se muestran las de [`content/faq.ts`](web/content/faq.ts)) |
 | Número de WhatsApp | `/admin/sitio` (el de [`content/sitio.ts`](web/content/sitio.ts) es solo el valor por defecto) |
 | Instagram, menú | [`content/sitio.ts`](web/content/sitio.ts) |

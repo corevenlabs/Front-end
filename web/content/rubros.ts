@@ -16,10 +16,11 @@ export type Rubro = {
   slug: string;
   nombre: string;
   corto: string;
-  tuNegocio: string;
+  enNegocio: string; // con artículo: «Qué hace el agente en {enNegocio}»
   icono: IconoRubro;
   resumen: string;
   titulo: string;
+  tituloSeo?: string; // título para Google cuando «titulo» es muy largo (máx. ~45 caracteres)
   bajada: string;
   tareas: string[];
   enDemo: boolean;
@@ -31,12 +32,13 @@ export const RUBROS: Rubro[] = [
     slug: 'restaurantes',
     nombre: 'Restaurantes y delivery',
     corto: 'Ramen',
-    tuNegocio: 'restaurante',
+    enNegocio: 'un restaurante',
+    tituloSeo: 'Chatbot de WhatsApp para restaurantes y delivery',
     icono: 'ramen',
     resumen: 'Pedidos, carta, horarios, despacho',
     titulo: 'Agente de WhatsApp para restaurantes y delivery',
-    bajada: 'Toma pedidos a la hora de la once y a medianoche, responde la carta y confirma la dirección mientras tu cocina trabaja.',
-    tareas: ['Responde carta, precios y opciones veganas o sin gluten', 'Arma el pedido y confirma comuna y dirección', 'Informa costo y tiempo de despacho', 'Te avisa los pedidos grandes o los reclamos'],
+    bajada: 'Toma pedidos a la hora de la once y a medianoche, responde la carta y confirma la dirección mientras la cocina trabaja.',
+    tareas: ['Responde carta, precios y opciones veganas o sin gluten', 'Arma el pedido y confirma comuna y dirección', 'Informa costo y tiempo de despacho', 'Avisa al equipo los pedidos grandes o los reclamos'],
     enDemo: true,
     negocio: {
       nombre: 'Ramen Kintsugi',
@@ -73,12 +75,13 @@ Pedidos de más de 10 ramen, eventos o reclamos: derivar al encargado (Matías).
     slug: 'carnicerias',
     nombre: 'Carnicerías con delivery',
     corto: 'Carnicería',
-    tuNegocio: 'carnicería',
+    enNegocio: 'una carnicería',
+    tituloSeo: 'Chatbot de WhatsApp para carnicerías',
     icono: 'carne',
     resumen: 'Cortes, precios por kilo, pedidos para el asado',
     titulo: 'Agente de WhatsApp para carnicerías con delivery',
     bajada: 'El viernes en la noche todos preguntan por el asado. El agente responde cortes, precios por kilo y arma el pedido para el sábado temprano.',
-    tareas: ['Responde cortes disponibles y precio por kilo', 'Calcula cuánta carne llevar según cuántas personas', 'Toma pedidos y agenda el despacho', 'Te avisa los pedidos grandes o por mayor'],
+    tareas: ['Responde cortes disponibles y precio por kilo', 'Calcula cuánta carne llevar según cuántas personas', 'Toma pedidos y agenda el despacho', 'Avisa al equipo los pedidos grandes o por mayor'],
     enDemo: false,
     negocio: {
       nombre: 'Carnes Don Lalo',
@@ -97,12 +100,13 @@ Pedidos de más de 10 ramen, eventos o reclamos: derivar al encargado (Matías).
     slug: 'joyerias',
     nombre: 'Joyerías a medida',
     corto: 'Joyería',
-    tuNegocio: 'joyería',
+    enNegocio: 'una joyería',
     icono: 'anillo',
     resumen: 'Cotizaciones, plazos, visitas al taller',
     titulo: 'Agente de WhatsApp para joyerías y talleres a medida',
+    tituloSeo: 'Chatbot de WhatsApp para joyerías y talleres',
     bajada: 'Las consultas por anillos de compromiso llegan de noche y con nervios. El agente responde materiales, rangos de precio y plazos, y agenda la visita al taller.',
-    tareas: ['Responde materiales, rangos de precio y plazos', 'Pide la talla, el diseño y la fecha importante', 'Agenda visitas al taller', 'Te pasa las cotizaciones especiales con todo el detalle'],
+    tareas: ['Responde materiales, rangos de precio y plazos', 'Pide la talla, el diseño y la fecha importante', 'Agenda visitas al taller', 'Deriva las cotizaciones especiales con todo el detalle'],
     enDemo: true,
     negocio: {
       nombre: 'Taller Plata Austral',
@@ -138,12 +142,13 @@ Cotizaciones con piedras especiales, rediseño de joyas heredadas o pedidos corp
     slug: 'banqueterias',
     nombre: 'Banqueterías',
     corto: 'Banquetería',
-    tuNegocio: 'banquetería',
+    enNegocio: 'una banquetería',
+    tituloSeo: 'Chatbot de WhatsApp para banqueterías',
     icono: 'cloche',
     resumen: 'Menús, cotizaciones por persona, fechas',
     titulo: 'Agente de WhatsApp para banqueterías',
-    bajada: 'Cada cotización empieza con las mismas preguntas: cuántas personas, qué fecha, qué menú. El agente las hace por ti y te entrega la cotización armada.',
-    tareas: ['Pregunta fecha, comuna y cantidad de invitados', 'Muestra menús y precio por persona', 'Revisa si la fecha está disponible', 'Te pasa la cotización lista para cerrar'],
+    bajada: 'Cada cotización empieza con las mismas preguntas: cuántas personas, qué fecha, qué menú. El agente las hace y entrega la cotización armada al equipo.',
+    tareas: ['Pregunta fecha, comuna y cantidad de invitados', 'Muestra menús y precio por persona', 'Revisa si la fecha está disponible', 'Entrega la cotización lista para cerrar'],
     enDemo: false,
     negocio: {
       nombre: 'Banquetería Los Aromos',
@@ -162,12 +167,13 @@ Cotizaciones con piedras especiales, rediseño de joyas heredadas o pedidos corp
     slug: 'centros-de-eventos',
     nombre: 'Centros de eventos',
     corto: 'Eventos',
-    tuNegocio: 'centro de eventos',
+    enNegocio: 'un centro de eventos',
+    tituloSeo: 'Chatbot de WhatsApp para centros de eventos',
     icono: 'banderines',
     resumen: 'Disponibilidad, capacidad, visitas',
     titulo: 'Agente de WhatsApp para centros de eventos',
     bajada: 'Responde disponibilidad, capacidad y valores al instante, y agenda la visita al recinto con quien de verdad está interesado.',
-    tareas: ['Responde capacidad, valores y qué incluye', 'Revisa fechas disponibles', 'Agenda visitas al recinto', 'Te pasa los eventos confirmados o corporativos'],
+    tareas: ['Responde capacidad, valores y qué incluye', 'Revisa fechas disponibles', 'Agenda visitas al recinto', 'Deriva los eventos confirmados o corporativos'],
     enDemo: false,
     negocio: {
       nombre: 'Casona El Quillay',
@@ -186,12 +192,13 @@ Cotizaciones con piedras especiales, rediseño de joyas heredadas o pedidos corp
     slug: 'construccion-y-remodelacion',
     nombre: 'Construcción y remodelación',
     corto: 'Remodelación',
-    tuNegocio: 'empresa de remodelación',
+    enNegocio: 'una empresa de remodelación',
     icono: 'rodillo',
     resumen: 'Visitas técnicas, presupuestos',
     titulo: 'Agente de WhatsApp para empresas de construcción y remodelación',
-    bajada: 'Filtra las consultas, pide fotos y metros, da rangos de precio y agenda la visita técnica. Tú llegas a la visita sabiendo qué hay que hacer.',
-    tareas: ['Pide metros, fotos y comuna', 'Da rangos de precio por tipo de trabajo', 'Agenda visitas técnicas', 'Te pasa el resumen antes de cada visita'],
+    tituloSeo: 'Chatbot de WhatsApp para construcción y obras',
+    bajada: 'Filtra las consultas, pide fotos y metros, da rangos de precio y agenda la visita técnica. El equipo llega a la visita sabiendo qué hay que hacer.',
+    tareas: ['Pide metros, fotos y comuna', 'Da rangos de precio por tipo de trabajo', 'Agenda visitas técnicas', 'Envía un resumen al equipo antes de cada visita'],
     enDemo: true,
     negocio: {
       nombre: 'Remodela Sur',

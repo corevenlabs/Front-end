@@ -1,13 +1,14 @@
 import type { Metadata } from 'next';
+import { metadatos } from '@/lib/seo';
 import Link from 'next/link';
 import { RESPONSABLE as R } from '@/content/legal';
 import s from '@/components/Pagina.module.css';
 
-export const metadata: Metadata = {
-  title: 'Términos de uso de la demo',
-  description: 'La demo del agente es un ejemplo con negocios inventados. Qué puedes esperar de ella y qué no.',
-  alternates: { canonical: '/terminos-demo' },
-};
+export const metadata: Metadata = metadatos({
+  ruta: '/terminos-demo',
+  titulo: 'Términos de uso de la demo',
+  descripcion: 'La demo del agente de WhatsApp es un ejemplo con negocios inventados. Qué se puede esperar de ella, qué no, y por qué no se deben escribir datos personales.',
+});
 
 export default function TerminosDemo() {
   return (
@@ -21,13 +22,13 @@ export default function TerminosDemo() {
         <h2>Es un ejemplo</h2>
         <p>
           Los negocios de la demo (Ramen Kintsugi, Taller Plata Austral, Remodela Sur y los demás que aparecen en el sitio) son
-          inventados por {R.nombre}. Sus cartas, precios, horarios, direcciones y personas no existen. No puedes comprar, reservar
+          inventados por {R.nombre}. Sus cartas, precios, horarios, direcciones y personas no existen. No es posible comprar, reservar
           ni agendar nada real a través de la demo.
         </p>
 
-        <h2>No escribas datos personales</h2>
+        <h2>No escriba datos personales</h2>
         <p>
-          No escribas tu RUT, dirección, teléfono, datos de salud, datos bancarios ni información de otras personas. Los mensajes
+          No escriba su RUT, dirección, teléfono, datos de salud, datos bancarios ni información de otras personas. Los mensajes
           se envían a un proveedor de inteligencia artificial para generar la respuesta. No guardamos el contenido de las
           conversaciones; más detalles en la <Link href="/privacidad">política de privacidad</Link>.
         </p>
@@ -45,8 +46,8 @@ export default function TerminosDemo() {
           solo las preguntas sugeridas hasta el día siguiente.
         </p>
         <p>
-          No uses la demo para intentar que el agente diga contenido ofensivo, ilegal o ajeno al negocio de ejemplo, ni para
-          automatizar consultas. Podemos bloquear el acceso a quien lo haga.
+          No está permitido usar la demo para intentar que el agente diga contenido ofensivo, ilegal o ajeno al negocio de
+          ejemplo, ni para automatizar consultas. Podemos bloquear el acceso a quien lo haga.
         </p>
 
         <h2>Sin garantías</h2>

@@ -55,3 +55,32 @@
 .legal th { font-weight: 600; }
 .tabla { overflow-x: auto; }
 .actualizado { font-family: var(--f-mono); font-size: 12px; color: var(--gris-texto); }
+
+/* ---------- Guías ---------- */
+.guia { padding-bottom: 8px; }
+.guia .legal { padding-top: 8px; }
+.guiaResumen { border: var(--borde); border-radius: var(--radio); padding: 18px 20px; margin-top: 8px; }
+.legal .guiaResumen h2, .legal .guiaIndice h2 { margin: 0 0 10px; font-size: 17px; }
+.legal .guiaResumen ul { list-style: none; padding: 0; gap: 8px; }
+.guiaResumen li { display: flex; gap: 10px; align-items: flex-start; }
+.guiaResumen svg { width: 16px; height: 11px; margin-top: 7px; flex: none; color: var(--azul); }
+.guiaIndice { margin-top: 24px; padding: 16px 20px; background: var(--gris-fondo); border-radius: var(--radio); }
+.guiaIndice ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+.guiaIndice a { color: var(--azul-accion); }
+.legal .guiaPasos { padding-left: 22px; display: flex; flex-direction: column; gap: 10px; margin: 10px 0 0; }
+.guiaPrecio { margin-top: 14px; padding: 16px 20px; border-left: 3px solid var(--azul); background: var(--gris-fondo); }
+.legal .guiaPrecio ul { margin-top: 6px; }
+.guiaPrecio a, .guiaServicio a { color: var(--azul-accion); font-weight: 600; }
+.guiaDemo { margin-top: 36px; padding: 20px; border: var(--borde); border-radius: var(--radio); display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+.legal .guiaPregunta { font-size: 17px; font-weight: 700; margin: 22px 0 6px; }
+.guiaServicio { margin-top: 32px; }
+.legal th[scope='row'] { font-weight: 600; }
+.guiasLista { display: grid; gap: 14px; padding-block: 24px var(--seccion); grid-template-columns: 1fr; }
+@media (min-width: 760px) { .guiasLista { grid-template-columns: 1fr 1fr; } }
+.guiaTarjeta { display: flex; flex-direction: column; gap: 10px; padding: 22px; border: var(--borde); border-radius: var(--radio); text-decoration: none; }
+.guiaTarjeta h2 { font-size: 20px; font-weight: 700; font-stretch: 108%; }
+.guiaTarjeta p { color: var(--texto-cuerpo); }
+.guiaTarjeta span { display: inline-flex; align-items: center; gap: 6px; color: var(--azul-accion); font-weight: 600; margin-top: auto; }
+.guiaTarjeta svg { width: 12px; height: 12px; }
+.ideal a { color: var(--azul-accion); font-weight: 600; }
+.legal ol + p, .guiaPrecio + p, .legal .tabla + p { margin-top: 12px; }

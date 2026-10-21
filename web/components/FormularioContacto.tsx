@@ -42,13 +42,13 @@ export function FormularioContacto() {
       const res = await r.json().catch(() => ({}));
       if (!r.ok) {
         if (res.errores) setErrores(res.errores);
-        setErrorGeneral(res.error || 'No pudimos enviar tu mensaje. Intenta de nuevo o escríbenos por WhatsApp.');
+        setErrorGeneral(res.error || 'No pudimos enviar su mensaje. Intente de nuevo o escríbanos por WhatsApp.');
         setEstado('error');
         return;
       }
       setEstado('enviado');
     } catch {
-      setErrorGeneral('Se cortó la conexión. Revisa tu internet e intenta de nuevo.');
+      setErrorGeneral('Se cortó la conexión. Revise su internet e intente de nuevo.');
       setEstado('error');
     }
   }
@@ -58,7 +58,7 @@ export function FormularioContacto() {
       <div className={s.enviado} role="status">
         <DobleCheck className={s.check} />
         <h2>Recibido, {datos.nombre.split(' ')[0]}.</h2>
-        <p>Te escribimos a {datos.contacto.trim()} lo antes posible.</p>
+        <p>Le escribiremos a {datos.contacto.trim()} lo antes posible.</p>
       </div>
     );
   }
@@ -69,13 +69,13 @@ export function FormularioContacto() {
   return (
     <form className={s.form} onSubmit={enviar} noValidate>
       <div className={s.campo}>
-        <label htmlFor="contacto-nombre">Tu nombre</label>
+        <label htmlFor="contacto-nombre">Nombre</label>
         <input {...campo('nombre')} autoComplete="name" maxLength={LIMITES.nombre}
           value={datos.nombre} onChange={(e) => setDatos({ ...datos, nombre: e.target.value })} />
         <Error k="nombre" />
       </div>
       <div className={s.campo}>
-        <label htmlFor="contacto-negocio">Tu negocio</label>
+        <label htmlFor="contacto-negocio">Negocio</label>
         <input {...campo('negocio')} autoComplete="organization" maxLength={LIMITES.negocio} placeholder="Ej: Carnicería Don Lalo, Maipú"
           value={datos.negocio} onChange={(e) => setDatos({ ...datos, negocio: e.target.value })} />
         <Error k="negocio" />
@@ -87,7 +87,7 @@ export function FormularioContacto() {
         <Error k="contacto" />
       </div>
       <div className={s.campo}>
-        <label htmlFor="contacto-mensaje">¿Qué te gustaría resolver? <span className={s.opcional}>(opcional)</span></label>
+        <label htmlFor="contacto-mensaje">¿Qué le gustaría resolver? <span className={s.opcional}>(opcional)</span></label>
         <textarea {...campo('mensaje')} rows={4} maxLength={LIMITES.mensaje} placeholder="Ej: Nos escriben mucho de noche por pedidos y no alcanzamos a contestar."
           value={datos.mensaje} onChange={(e) => setDatos({ ...datos, mensaje: e.target.value })} />
         <Error k="mensaje" />

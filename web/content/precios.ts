@@ -19,13 +19,13 @@ export const CLAVES_PRECIO = Object.keys(PRECIOS_BASE) as ClavePrecio[];
 
 export const DETALLE_AGENTE = {
   implementacion: [
-    'Levantamos tu carta o catálogo, precios, horarios y políticas',
-    'Armamos el agente y lo probamos con tus preguntas reales',
-    'Lo conectamos a tu WhatsApp e Instagram',
+    'Levantamos la carta o el catálogo, los precios, horarios y políticas',
+    'Armamos el agente y lo probamos con preguntas reales de clientes',
+    'Lo conectamos al WhatsApp e Instagram del negocio',
   ],
   mensualidad: [
     'Uso de la IA y del servicio de mensajería',
-    'Cambios cuando cambian tus precios, menú o promociones',
+    'Cambios cuando cambian los precios, el menú o las promociones',
     'Revisión de conversaciones y ajustes',
   ],
 };

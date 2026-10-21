@@ -23,12 +23,12 @@ export function tipoContacto(valor: string): 'correo' | 'telefono' | null {
 
 export function validar(d: DatosContacto): Errores {
   const e: Errores = {};
-  if (!d.nombre.trim()) e.nombre = 'Escribe tu nombre.';
+  if (!d.nombre.trim()) e.nombre = 'Escriba su nombre.';
   else if (d.nombre.length > LIMITES.nombre) e.nombre = `Máximo ${LIMITES.nombre} caracteres.`;
-  if (!d.negocio.trim()) e.negocio = 'Cuéntanos el nombre de tu negocio.';
+  if (!d.negocio.trim()) e.negocio = 'Indique el nombre de su negocio.';
   else if (d.negocio.length > LIMITES.negocio) e.negocio = `Máximo ${LIMITES.negocio} caracteres.`;
-  if (!tipoContacto(d.contacto)) e.contacto = 'Escribe un WhatsApp chileno (+56 9…) o un correo válido.';
+  if (!tipoContacto(d.contacto)) e.contacto = 'Escriba un WhatsApp chileno (+56 9…) o un correo válido.';
   if (d.mensaje.length > LIMITES.mensaje) e.mensaje = `Máximo ${LIMITES.mensaje} caracteres.`;
-  if (!d.acepta) e.acepta = 'Necesitamos tu autorización para responderte.';
+  if (!d.acepta) e.acepta = 'Necesitamos su autorización para responderle.';
   return e;
 }

@@ -22,7 +22,7 @@ export function Reloj() {
       <span className="reloj-punto" aria-hidden="true" />
       <span>
         Son las <b className="mono">{hora ?? '--:--'}</b> en Santiago.{' '}
-        {fueraDeHorario ? 'A esta hora casi nadie contesta. El agente sí.' : 'Escríbele como si fueras cliente.'}
+        {fueraDeHorario ? 'A esta hora casi nadie contesta. El agente sí.' : 'Pruebe el agente como si fuera cliente.'}
       </span>
     </p>
   );

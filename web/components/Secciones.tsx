@@ -9,21 +9,22 @@ import { SERVICIOS } from '@/content/servicios';
 import { DETALLE_AGENTE, NOTA_PRECIOS, pesos, textoPrecio } from '@/content/precios';
 import { clavePrecioDeServicio, obtenerPrecios } from '@/lib/precios';
 import { obtenerPreguntas } from '@/lib/ajustes';
-import { enlaceWhatsapp } from '@/content/sitio';
+import { SITIO, enlaceWhatsapp } from '@/content/sitio';
 import s from './Secciones.module.css';
 
 export function Hero({ negocios }: { negocios: NegocioDemo[] }) {
   return (
     <section className={s.hero} aria-labelledby="hero-titulo">
       <div className={`contenedor ${s.heroGrilla}`}>
-        <p className={`etiqueta ${s.heroEtiqueta}`}>Agentes para WhatsApp e Instagram · Chile</p>
+        <p className={`etiqueta ${s.heroEtiqueta}`}>Chatbots con IA para WhatsApp e Instagram · Chile</p>
         <h1 id="hero-titulo" className={s.heroTitulo}>
-          Tus clientes escriben a cualquier hora. Le compran al que contesta primero{' '}
-          <span className={s.sello}><DobleCheck className={s.selloCheck} titulo="leído" />23:47</span>
+          Los clientes escriben a cualquier hora. Le compran al que contesta primero{' '}
+          {/* Decorativo: la hora va en CSS (data-hora) para que no sea parte del título que lee Google */}
+          <span className={s.sello} data-hora="23:47" aria-hidden="true"><DobleCheck className={s.selloCheck} /></span>
         </h1>
         <div className={s.heroTexto}>
           <p className={s.heroBajada}>
-            Armamos un agente que responde al instante, toma pedidos, cotiza y agenda. Lo importante te lo pasa a ti.
+            Armamos un chatbot con inteligencia artificial que responde al instante, toma pedidos, cotiza y agenda. Lo importante lo deriva a su equipo.
           </p>
           <div className={s.heroBotones}>
             <a className="btn btn-primario" href={enlaceWhatsapp()} target="_blank" rel="noopener noreferrer">
@@ -85,12 +86,12 @@ export function Banda() {
 }
 
 const FUNCIONES: { icono: NombreIcono; titulo: string; texto: string }[] = [
-  { icono: 'chat', titulo: 'Responde al instante', texto: 'Precios, horarios, stock y despacho, en segundos y con el tono de tu negocio.' },
+  { icono: 'chat', titulo: 'Responde al instante', texto: 'Precios, horarios, stock y despacho, en segundos y con el tono del negocio.' },
   { icono: 'luna', titulo: 'Atiende de noche', texto: 'Las 23:47 también son horario de venta. No se cansa ni se olvida de nadie.' },
-  { icono: 'bolsa', titulo: 'Toma pedidos', texto: 'Arma el pedido, confirma la dirección y te lo deja listo para despachar.' },
-  { icono: 'boleta', titulo: 'Cotiza', texto: 'Calcula con tus precios reales y manda el detalle por escrito.' },
+  { icono: 'bolsa', titulo: 'Toma pedidos', texto: 'Arma el pedido, confirma la dirección y lo deja listo para despachar.' },
+  { icono: 'boleta', titulo: 'Cotiza', texto: 'Calcula con los precios reales del negocio y envía el detalle por escrito.' },
   { icono: 'agenda', titulo: 'Agenda', texto: 'Ofrece horas disponibles para visitas, reservas o pruebas.' },
-  { icono: 'derivar', titulo: 'Te pasa lo importante', texto: 'Reclamos, pedidos grandes y casos delicados te llegan al celular.' },
+  { icono: 'derivar', titulo: 'Deriva lo importante', texto: 'Reclamos, pedidos grandes y casos delicados llegan al celular del equipo.' },
 ];
 
 export function QueHace() {
@@ -109,14 +110,14 @@ export function QueHace() {
         </ul>
         <div className={s.extra}>
           <Icono nombre="caja" className={s.extraIcono} />
-          <p><b>¿Y lo de adentro?</b> También automatizamos procesos internos: pedidos, cotizaciones, inventario y agenda. Y si tu negocio no tiene web, te la hacemos.</p>
+          <p><b>¿Y lo de adentro?</b> También automatizamos procesos internos: pedidos, cotizaciones, inventario y agenda. Y si el negocio aún no tiene página web, también la desarrollamos.</p>
         </div>
       </div>
     </section>
   );
 }
 
-export async function Servicios({ titulo = 'Todo lo digital de tu pyme', excluir }: { titulo?: string; excluir?: string }) {
+export async function Servicios({ titulo = 'Todo lo digital para una pyme', excluir }: { titulo?: string; excluir?: string }) {
   const precios = await obtenerPrecios();
   const lista = SERVICIOS.filter((sv) => sv.slug !== excluir);
   // Con el agente en la lista, va destacado a doble ancho: 7 servicios llenan 2 filas de 4.
@@ -125,7 +126,7 @@ export async function Servicios({ titulo = 'Todo lo digital de tu pyme', excluir
     <section className="seccion" id="servicios" aria-labelledby="servicios-titulo">
       <div className="contenedor">
         <h2 id="servicios-titulo" className="titulo-seccion">{titulo}</h2>
-        <p className="bajada" style={{ marginTop: 12 }}>Además del agente, hacemos lo que tu negocio necesita para vender en línea. Un solo equipo, años de experiencia en web, apps y ecommerce.</p>
+        <p className="bajada" style={{ marginTop: 12 }}>Además del chatbot, desarrollamos lo que una pyme necesita para vender en línea. Un solo equipo, con años de experiencia en web, apps y ecommerce.</p>
         <ul className={`${s.servicios} ${destacado ? s.conDestacado : ''}`}>
           {lista.map((sv) => (
             <li key={sv.slug} data-revelar className={s.servicioItem}>
@@ -151,7 +152,7 @@ export function Rubros() {
     <section className="seccion" id="rubros" aria-labelledby="rubros-titulo">
       <div className="contenedor">
         <h2 id="rubros-titulo" className="titulo-seccion">Rubros que atendemos</h2>
-        <p className="bajada" style={{ marginTop: 12 }}>Cada rubro tiene sus preguntas de siempre. Mira cómo responde el agente en el tuyo.</p>
+        <p className="bajada" style={{ marginTop: 12 }}>Cada rubro tiene sus preguntas de siempre. Así responde el agente en cada uno.</p>
         <ul className={s.rubros}>
           {RUBROS.map((r) => (
             <li key={r.slug}>
@@ -172,9 +173,9 @@ export function Rubros() {
 }
 
 const PASOS = [
-  { titulo: 'Nos cuentas tu negocio', texto: 'Carta o catálogo, precios, horarios, zonas de despacho y lo que no se puede prometer.' },
-  { titulo: 'Armamos y probamos el agente', texto: 'Lo probamos con las preguntas que de verdad te hacen tus clientes, hasta que digas «así lo diría yo».' },
-  { titulo: 'Lo conectamos y te avisa', texto: 'Queda en tu WhatsApp e Instagram. Lo repetido lo responde; los pedidos y lo delicado te llegan al celular.' },
+  { titulo: 'Conocemos el negocio', texto: 'Carta o catálogo, precios, horarios, zonas de despacho y lo que no se puede prometer.' },
+  { titulo: 'Armamos y probamos el agente', texto: 'Lo probamos con las preguntas que de verdad hacen los clientes, hasta que responda como lo haría el propio negocio.' },
+  { titulo: 'Lo conectamos y avisa al equipo', texto: 'Queda funcionando en el WhatsApp e Instagram del negocio. Lo repetido lo responde; los pedidos y los casos delicados llegan al celular del equipo.' },
 ];
 
 export function ComoFunciona() {
@@ -278,7 +279,10 @@ export function Laudus() {
         <Image src="/image/laudus-logo.png" alt="Laudus ERP" width={120} height={31} className={s.laudusLogo} />
         <div>
           <h2 id="laudus-titulo" className={s.laudusTitulo}>Partners de Laudus ERP</h2>
-          <p>Integramos Laudus con tus procesos y herramientas para que la información fluya sin tareas repetitivas.</p>
+          <p>Integramos Laudus con los procesos y herramientas de cada empresa para que la información fluya sin tareas repetitivas.</p>
+          <p className={s.laudusEnlace}>
+            <a href={SITIO.laudus} target="_blank" rel="noopener">Ver nuestra ficha en las alianzas de Laudus <Flecha /></a>
+          </p>
         </div>
       </div>
     </section>
@@ -291,7 +295,7 @@ export function Cierre() {
       <div className={`contenedor ${s.cierreFila}`}>
         <div>
           <h2 id="cierre-titulo" className="titulo-seccion">¿Conversamos?</h2>
-          <p className="bajada" style={{ marginTop: 12 }}>Cuéntanos qué vendes y cómo te escriben tus clientes. Te respondemos rápido, como corresponde.</p>
+          <p className="bajada" style={{ marginTop: 12 }}>Una breve conversación basta para saber qué le conviene a cada negocio. Respondemos rápido, como corresponde.</p>
         </div>
         <div className={s.cierreBotones}>
           <a className="btn btn-primario" href={enlaceWhatsapp()} target="_blank" rel="noopener noreferrer">Escríbenos por WhatsApp <Flecha /></a>

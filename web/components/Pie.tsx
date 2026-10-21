@@ -41,9 +41,11 @@ export function Pie() {
             <li><Link href="/demo">Probar la demo</Link></li>
             <li><Link href="/#como-funciona">Cómo funciona</Link></li>
             <li><Link href="/precios">Precios</Link></li>
+            <li><Link href="/guias">Guías</Link></li>
             <li><Link href="/contacto">Contacto</Link></li>
             <li><a href={enlaceWhatsapp()} target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
             <li><a href={SITIO.instagram} target="_blank" rel="noopener noreferrer">Instagram</a></li>
+            <li><a href={SITIO.laudus} target="_blank" rel="noopener">Partner de Laudus ERP</a></li>
           </ul>
         </nav>
 

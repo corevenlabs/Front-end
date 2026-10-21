@@ -1,16 +1,16 @@
 import type { Metadata } from 'next';
+import { metadatos } from '@/lib/seo';
 import { FormularioContacto } from '@/components/FormularioContacto';
 import { Flecha } from '@/components/Iconos';
 import { enlaceWhatsapp } from '@/content/sitio';
 import { formatearWhatsapp, obtenerWhatsapp } from '@/lib/ajustes';
 import s from '@/components/Pagina.module.css';
 
-export const metadata: Metadata = {
-  title: 'Contacto',
-  description: 'Cuéntanos qué vendes y cómo te escriben tus clientes. Te respondemos rápido por WhatsApp o correo.',
-  alternates: { canonical: '/contacto' },
-  openGraph: { url: '/contacto' },
-};
+export const metadata: Metadata = metadatos({
+  ruta: '/contacto',
+  titulo: 'Contacto: cotice su chatbot o su página web',
+  descripcion: 'Cuéntenos qué vende y cómo le escriben sus clientes. Respondemos rápido por WhatsApp o correo, sin compromiso y con una recomendación clara.',
+});
 
 export default async function Contacto() {
   const whatsapp = await obtenerWhatsapp();
@@ -18,8 +18,8 @@ export default async function Contacto() {
     <>
       <div className={`contenedor ${s.cabecera}`}>
         <p className="etiqueta">Contacto</p>
-        <h1 className={s.titulo}>Cuéntanos de tu negocio</h1>
-        <p className={s.bajada}>Déjanos tus datos y te escribimos. Si prefieres, háblanos directo por WhatsApp.</p>
+        <h1 className={s.titulo}>Hablemos de su negocio</h1>
+        <p className={s.bajada}>Con unos pocos datos le respondemos a la brevedad. Si lo prefiere, puede escribirnos directo por WhatsApp.</p>
       </div>
       <div className={`contenedor ${s.dos}`}>
         <FormularioContacto />

@@ -75,14 +75,14 @@ export function ChatDemo({ negocios, compacto = false, inicial, idCampo = 'demo-
       if (!r.ok || !datos.respuesta) {
         setLineas((ls) => [...ls, conId({
           de: 'agente', error: true, hora: horaSantiago(),
-          texto: datos.error || 'No pude responder ahora. Intenta de nuevo en un momento.',
+          texto: datos.error || 'No pude responder ahora. Intente de nuevo en un momento.',
         })]);
       } else {
         setLineas((ls) => [...ls, conId({ de: 'agente', texto: datos.respuesta, hora: horaSantiago(), ms })]);
       }
     } catch {
       setLineas((ls) => [...ls, conId({
-        de: 'agente', error: true, hora: horaSantiago(), texto: 'Se cortó la conexión. Revisa tu internet e intenta de nuevo.',
+        de: 'agente', error: true, hora: horaSantiago(), texto: 'Se cortó la conexión. Revise su internet e intente de nuevo.',
       })]);
     } finally {
       setEsperando(false);
@@ -103,7 +103,7 @@ export function ChatDemo({ negocios, compacto = false, inicial, idCampo = 'demo-
           <span className={s.etiqueta}>Ejemplo</span>
         </div>
 
-        <div className={s.rubros} role="group" aria-label="Elige el negocio de ejemplo">
+        <div className={s.rubros} role="group" aria-label="Negocio de ejemplo">
           {negocios.map((n) => (
             <button
               key={n.slug}
@@ -121,15 +121,15 @@ export function ChatDemo({ negocios, compacto = false, inicial, idCampo = 'demo-
           {negocio.ejemplo.map((m, i) => (
             <Burbuja key={`ej-${slug}-${i}`} de={m.de} texto={m.texto} hora={m.hora} />
           ))}
-          <p className={s.separador}><span>Ahora escríbele tú, como si fueras cliente</span></p>
+          <p className={s.separador}><span>Ahora pruebe usted, como si fuera cliente</span></p>
           {lineas.map((l) => (
             <Burbuja key={l.id} {...l} nuevo />
           ))}
           {esperando && <div className={s.escribiendo} aria-label="El agente está escribiendo"><i /><i /><i /></div>}
           {respuestas >= RESPUESTAS_ANTES_DEL_CTA && !esperando && (
             <div className={s.cta}>
-              <b>¿Lo quieres para tu negocio?</b>
-              <span>Lo armamos con tus precios, horarios y tu forma de hablar.</span>
+              <b>¿Lo quiere para su negocio?</b>
+              <span>Lo armamos con sus precios, horarios y su forma de atender.</span>
               <a className="btn btn-primario" href={enlaceWhatsapp('Hola, probé la demo y quiero un agente para mi negocio')} target="_blank" rel="noopener noreferrer">
                 Escríbenos por WhatsApp <Flecha />
               </a>
@@ -149,13 +149,13 @@ export function ChatDemo({ negocios, compacto = false, inicial, idCampo = 'demo-
         )}
 
         <form className={s.entrada} onSubmit={(e) => { e.preventDefault(); enviar(texto); }}>
-          <label htmlFor={idCampo} className="sr-only">Tu mensaje para el agente</label>
+          <label htmlFor={idCampo} className="sr-only">Mensaje para el agente</label>
           <input
             id={idCampo}
             value={texto}
             onChange={(e) => setTexto(e.target.value)}
             maxLength={MAX_CARACTERES}
-            placeholder="Escribe tu pregunta…"
+            placeholder="Escriba su pregunta…"
             autoComplete="off"
             enterKeyHint="send"
           />
