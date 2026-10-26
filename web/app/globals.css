@@ -13,6 +13,13 @@
   --texto-cuerpo: #2a2d33;
   --error: #b42318;
 
+  /* Acabado compartido: profundidad y acentos sin alterar la paleta original. */
+  --superficie-azul: #f5f8fe;
+  --borde-acento: #bfd3ef;
+  --sombra-suave: 0 2px 5px rgb(20 42 75 / 3%), 0 12px 28px -18px rgb(20 42 75 / 18%);
+  --sombra-elevada: 0 4px 10px rgb(20 42 75 / 4%), 0 18px 36px -18px rgb(20 42 75 / 23%);
+  --sombra-accion: 0 4px 10px -4px rgb(31 100 209 / 35%);
+
   /* Tipografía (las variables de fuente las define next/font en layout.tsx) */
   --f-titulo: var(--font-archivo), 'Arial Black', system-ui, sans-serif;
   --f-cuerpo: var(--font-archivo), system-ui, sans-serif;
@@ -120,3 +127,32 @@ button, input, textarea, select { font: inherit; color: inherit; }
 .btn svg { width: 12px; height: 12px; transition: transform var(--rapido) var(--suave); }
 .btn:hover svg, .flecha-mueve:hover svg { transform: translate(2px, -2px); }
 .btn:disabled { opacity: .5; cursor: not-allowed; }
+
+/* Movimiento progresivo del home: sin JS y con movimiento reducido todo es visible. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-motion-ready='true'] {
+    transition: opacity 550ms var(--suave), transform 550ms var(--suave);
+    transition-delay: var(--motion-delay, 0ms);
+  }
+  [data-motion-ready='true']:not(.motion-visible) { opacity: 0; transform: translateY(14px); }
+  /* El título y la información principal nunca se ocultan al cargar. */
+  [data-motion='hero'][data-motion-ready='true']:not(.motion-visible) { opacity: 1; transform: translateY(10px); }
+  [data-motion-ready='true']:focus-within { opacity: 1; transform: none; transition-delay: 0ms; }
+  [data-home-motion] .btn {
+    transition: background 160ms, color 160ms, transform 180ms var(--suave), box-shadow 180ms var(--suave);
+  }
+  [data-home-motion] .btn:active { transform: translateY(1px); }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  [data-home-motion] .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 12px -8px #10203455; }
+  [data-home-motion] .btn:active { transform: translateY(1px); box-shadow: none; }
+}
+
+/* Pulido tipográfico público: conserva Archivo y la jerarquía de la marca. */
+.sitio-publico { font-weight: 400; line-height: 1.62; }
+.sitio-publico .titulo-seccion {
+  font-weight: 750; font-stretch: 110%; line-height: 1.12; letter-spacing: -.025em;
+}
+.sitio-publico .bajada { line-height: 1.65; text-wrap: pretty; }
+.sitio-publico .etiqueta { line-height: 1.6; letter-spacing: .025em; }
+.sitio-publico .btn { font-weight: 650; letter-spacing: -.01em; }

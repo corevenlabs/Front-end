@@ -23,7 +23,7 @@ export default async function Contacto() {
       </div>
       <div className={`contenedor ${s.dos}`}>
         <FormularioContacto />
-        <aside style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+        <aside className={s.contactoDirecto} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           <h2 className={s.subtitulo} style={{ marginBottom: 0 }}>¿Más rápido?</h2>
           <p className="bajada" style={{ fontSize: 16 }}>Escríbenos por WhatsApp y conversamos ahí mismo.</p>
           <a className="btn btn-secundario" style={{ alignSelf: 'flex-start' }} href={enlaceWhatsapp()} target="_blank" rel="noopener noreferrer">

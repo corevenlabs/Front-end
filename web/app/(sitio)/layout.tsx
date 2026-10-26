@@ -8,7 +8,7 @@ export default function SitioLayout({ children }: { children: React.ReactNode })
     <>
       <a className="saltar" href="#contenido">Saltar al contenido</a>
       <Nav />
-      <main id="contenido">{children}</main>
+      <main id="contenido" className="sitio-publico">{children}</main>
       <Pie />
       <Revelar />
       <Analitica />

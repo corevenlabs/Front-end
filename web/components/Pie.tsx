@@ -8,6 +8,7 @@ import s from './Pie.module.css';
 export function Pie() {
   return (
     <footer className={s.pie}>
+      <div className={s.marcaAguaEntrada} data-footer-watermark><LogoMarca className={s.marcaAgua} /></div>
       <div className={`contenedor ${s.grilla}`}>
         <div className={s.marca}>
           <Link href="/" className={s.logo} aria-label="Corevenlabs, ir al inicio">

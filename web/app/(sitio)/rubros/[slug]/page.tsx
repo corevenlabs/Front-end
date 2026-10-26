@@ -11,6 +11,7 @@ import { RUBROS, rubroPorSlug } from '@/content/rubros';
 import { enlaceWhatsapp } from '@/content/sitio';
 import { negociosParaDemo } from '@/lib/demo';
 import s from '@/components/Pagina.module.css';
+import telefono from '@/components/Secciones.module.css';
 
 export const dynamicParams = false;
 
@@ -47,12 +48,16 @@ export default async function PaginaRubro(props: PageProps<'/rubros/[slug]'>) {
           <p className={s.bajada}>{rubro.bajada}</p>
         </div>
 
-        <div className={s.chatCol}>
+        <div className={`${s.chatCol} ${telefono.heroDemo}`}>
+          <div className={telefono.escenaTelefono}>
+          <div className={telefono.telefonoFrente}>
           {rubro.enDemo ? (
-            <ChatDemo negocios={negociosParaDemo()} inicial={rubro.slug} />
+            <ChatDemo negocios={negociosParaDemo()} inicial={rubro.slug} compacto telefono />
           ) : (
             <Conversacion nombre={rubro.negocio.nombre} iniciales={rubro.negocio.iniciales} mensajes={rubro.negocio.conversacion} />
           )}
+          </div>
+          </div>
         </div>
 
         <div className={s.detalle}>

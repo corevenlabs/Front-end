@@ -2,6 +2,7 @@
   position: sticky; top: 0; z-index: 50;
   background: var(--blanco);
   border-bottom: 1px solid var(--gris-linea);
+  box-shadow: 0 3px 18px -12px rgb(20 42 75 / 24%);
 }
 .fila { display: flex; align-items: center; gap: 24px; min-height: 60px; }
 .marca {
@@ -15,7 +16,7 @@
 
 .links { display: none; gap: 28px; margin-left: auto; font-size: 15px; font-weight: 500; }
 .links a { text-decoration: none; padding-block: 6px; border-bottom: 1.5px solid transparent; }
-.links a:hover { border-bottom-color: var(--negro); }
+.links a:hover, .links a:focus-visible { border-bottom-color: var(--azul-accion); color: var(--azul-accion); }
 .fila .cta { display: none; min-height: 40px; padding: 8px 14px; font-size: 14px; }
 
 .movil { margin-left: auto; }
@@ -31,7 +32,12 @@
   background: var(--blanco); border-bottom: 1px solid var(--gris-linea);
   display: flex; flex-direction: column;
   padding: 8px max(16px, env(safe-area-inset-right, 0px)) 20px var(--margen);
+  box-shadow: var(--sombra-elevada);
 }
+
+.fila .cta { border-color: var(--borde-acento); box-shadow: var(--sombra-suave); }
+.fila .cta:hover { background: var(--superficie-azul); border-color: var(--azul-accion); }
+.panel a:not(:global(.btn)):hover { color: var(--azul-accion); }
 .panel a:not(:global(.btn)) {
   padding: 14px 0; border-bottom: 1px solid var(--gris-linea);
   text-decoration: none; font-weight: 600; font-size: 17px;

@@ -99,3 +99,80 @@
 
 .aviso { font-size: 12.5px; color: var(--gris-texto); line-height: 1.4; }
 .aviso a { color: var(--gris-texto); }
+
+/* El marco y la pantalla son capas distintas: ningún control invade el bisel. */
+.pantalla { display: contents; }
+.telefono { position: relative; max-width: 320px; margin-inline: auto; }
+/* Botones físicos fuera del cristal; la pantalla conserva su recorte. */
+.telefono::before, .telefono::after {
+  content: ''; position: absolute; width: 3px; border: 1px solid #42474b;
+  background: linear-gradient(90deg, #202326, #a0a4a7 50%, #41464a);
+  border-radius: 3px; pointer-events: none;
+}
+.telefono::before { left: -3px; top: 108px; height: 34px; box-shadow: 0 46px 0 -0.3px #555b5f; }
+.telefono::after { right: -3px; top: 146px; height: 58px; }
+.telefono .chat {
+  position: relative; overflow: hidden; isolation: isolate; display: block;
+  padding: 7px; border: 1px solid #949a9e; border-radius: 46px;
+  background: linear-gradient(115deg, #a4a8ab 0%, #3c4145 3%, #111315 7%, #08090a 45%, #171a1c 85%, #73797e 98%, #b7bbbe 100%);
+  box-shadow:
+    0 0 0 1px #272b2e,
+    inset 0 0 0 2px #5e6469,
+    inset 0 0 0 4px #15181a,
+    0 8px 14px -5px rgb(15 23 32 / 22%),
+    0 26px 38px -12px rgb(15 23 32 / 28%),
+    0 48px 65px -24px rgb(15 23 32 / 24%);
+}
+.telefono .pantalla {
+  display: flex; flex-direction: column; min-width: 0; width: 100%; height: 638px;
+  position: relative; overflow: hidden; border-radius: 38px; background: #f7f7f5;
+  contain: paint; flex-shrink: 0;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  /* Clip all scrolling content and the composer to the actual glass. */
+  clip-path: inset(0 round 38px);
+}
+.estadoTelefono { position: relative; display: flex; align-items: center; justify-content: space-between; height: 46px; padding: 0 22px; flex: none; color: #121516; font-size: 13px; font-weight: 700; }
+.isla { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 98px; height: 27px; border-radius: 999px; background: #050606; box-shadow: inset 0 1px 2px #ffffff12, 0 0 0 1px #000; }
+.isla::after { content: ''; position: absolute; right: 10px; top: 10px; width: 7px; height: 7px; border-radius: 50%; background: radial-gradient(circle at 40% 35%,#153e6a,#050a13); }
+.conexion { display: flex; align-items: center; gap: 4px; }
+.conexion svg { width: 29px; height: 15px; }
+.bateria { width: 18px; height: 9px; border: 1px solid #575b60; border-radius: 3px; background: linear-gradient(90deg,#17191b 80%,transparent 80%); }
+.telefono .cabecera { flex: none; gap: 7px; padding: 8px 12px 12px; background: #f7f7f5; }
+.atrasTelefono { font-size: 31px; line-height: 1; color: #176b50; }
+.telefono .avatar { width: 34px; height: 34px; background: #d9eee3; color: #125c46; font-size: 13px; }
+.telefono .quien { flex: 1; }
+.telefono .quien b { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.telefono .quien small { font-size: 11px; margin-top: 3px; }
+.telefono .quien small::before { content: ''; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: #20b95a; margin-right: 3px; }
+.iconoLlamada { width: 20px; height: 20px; flex: none; color: #176b50; }
+.telefono .etiqueta { display: none; }
+.selectorNegocio { display: flex; align-items: center; gap: 8px; flex: none; margin: 4px 8px 0; padding: 0 9px; border-radius: 9px; box-shadow: 0 1px 3px #00000010; background: #fafaf9; }
+.selectorNegocio > span { font-size: 11px; color: #65716b; flex: 1; }
+.selectorNegocio select { min-width: 0; max-width: 52%; min-height: 44px; padding: 4px; border: 0; background: transparent; color: #125c46; font-size: 16px; cursor: pointer; }
+.telefono .mensajes, .telefono .sugeridas {
+  background-color: #efeae2;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%23b7ad9d' stroke-opacity='.16' stroke-width='1.1'%3E%3Cpath d='m13 9 3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1zM62 64c-13-12-22 5 0 17 22-12 13-29 0-17zM55 10h22v16H65l-7 5v-5h-3z'/%3E%3Ccircle cx='24' cy='64' r='9'/%3E%3Cpath d='M19 65q5 7 10 0M20 61h1m5 0h1M80 40l8 5-8 5-8-5zM35 38l5 9m-10-2 14-5'/%3E%3C/g%3E%3C/svg%3E");
+}
+.telefono .mensajes { flex: 1 1 0; height: auto; min-height: 0; padding: 14px 10px; scrollbar-width: thin; }
+.telefono .burbuja { font-size: 13px; line-height: 1.48; max-width: 90%; border: 0; border-radius: 10px; box-shadow: 0 1px 1px #00000012; padding: 8px 10px 6px; flex-shrink: 0; }
+.telefono .agente { border-top-left-radius: 2px; }
+.telefono .cliente { background: #d9fdd3; border-top-right-radius: 2px; }
+.telefono .error { background: #fff0ed; color: var(--error); }
+.telefono .meta { font-size: 10px; flex-wrap: wrap; }
+.telefono .tiempo { color: #38614a; }
+.telefono .separador { font: 11px var(--f-cuerpo); justify-content: center; flex-shrink: 0; }
+.telefono .separador span { padding: 5px 9px; border-radius: 9px; background: #ffffffdf; color: #65716b; }
+.telefono .separador::before, .telefono .separador::after { display: none; }
+.telefono .sugeridas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; flex: none; min-width: 0; padding: 8px 10px; gap: 6px; }
+.telefono .sugerida { width: 100%; min-width: 0; max-width: 100%; min-height: 44px; padding: 7px 8px; border-radius: 12px; white-space: normal; overflow-wrap: break-word; text-align: center; color: #125c46; border-color: #87a897; font-size: 12.5px; line-height: 1.35; background: #ffffffed; }
+.telefono .entrada { display: grid; grid-template-columns: 44px minmax(0,1fr) 44px; flex: none; width: 100%; min-width: 0; gap: 6px; padding: 10px 12px 4px; border: 0; background: #f7f7f5; }
+.telefono .entrada input { width: 100%; min-width: 0; max-width: 100%; padding: 8px 10px; background: #fff; min-height: 40px; font-size: 16px; }
+.masTelefono { border: 0; border-radius: 50%; padding: 0; background: #e7e9e9; color: #626d72; font-size: 24px; width: 44px; height: 44px; cursor: text; }
+.telefono .enviar { background: #12694f; width: 44px; height: 44px; }
+.telefono .enviar:disabled { background: #527c6c; }
+.zonaSegura { flex: none; display: grid; place-items: end center; height: 32px; padding-bottom: 9px; background: #f7f7f5; border-radius: 0 0 38px 38px; overflow: hidden; }
+.zonaSegura span { width: 100px; height: 4px; border-radius: 999px; background: #151718; }
+.telefono .aviso { margin-top: 10px; text-align: center; font-size: 11.5px; line-height: 1.5; padding-inline: 6px; }
+@media (max-width: 374px) { .telefono { max-width: 300px; } .telefono .pantalla { height: 610px; } }
+
+.telefono .sugerida:last-child:nth-child(odd) { grid-column: 1 / -1; width: calc((100% - 6px) / 2); justify-self: center; }

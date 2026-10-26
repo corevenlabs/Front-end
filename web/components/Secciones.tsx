@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ChatDemo, type NegocioDemo } from './ChatDemo';
 import { Reloj } from './Reloj';
+import { RobotHero } from './RobotHero';
 import { LogoMarca } from './Logo';
 import { DobleCheck, Flecha, Icono, type NombreIcono } from './Iconos';
 import { RUBROS } from '@/content/rubros';
@@ -16,17 +17,20 @@ export function Hero({ negocios }: { negocios: NegocioDemo[] }) {
   return (
     <section className={s.hero} aria-labelledby="hero-titulo">
       <div className={`contenedor ${s.heroGrilla}`}>
+        <div className={s.heroContenido}>
         <p className={`etiqueta ${s.heroEtiqueta}`}>Chatbots con IA para WhatsApp e Instagram · Chile</p>
-        <h1 id="hero-titulo" className={s.heroTitulo}>
-          Los clientes escriben a cualquier hora. Le compran al que contesta primero{' '}
-          {/* Decorativo: la hora va en CSS (data-hora) para que no sea parte del título que lee Google */}
-          <span className={s.sello} data-hora="23:47" aria-hidden="true"><DobleCheck className={s.selloCheck} /></span>
+        <h1 data-motion="hero" id="hero-titulo" className={s.heroTitulo}>
+          <span className={s.heroLinea}>Los clientes escriben a</span>{' '}
+          <span className={s.heroLinea}>cualquier hora. Le compran</span>{' '}
+          <span className={s.heroLinea}>al que contesta primero{' '}
+            <span className={s.sello} data-hora="23:47" aria-hidden="true"><DobleCheck className={s.selloCheck} /></span>
+          </span>
         </h1>
         <div className={s.heroTexto}>
-          <p className={s.heroBajada}>
+          <p data-motion="hero" className={s.heroBajada}>
             Armamos un chatbot con inteligencia artificial que responde al instante, toma pedidos, cotiza y agenda. Lo importante lo deriva a su equipo.
           </p>
-          <div className={s.heroBotones}>
+          <div data-motion="hero" className={s.heroBotones}>
             <a className="btn btn-primario" href={enlaceWhatsapp()} target="_blank" rel="noopener noreferrer">
               Escríbenos por WhatsApp <Flecha />
             </a>
@@ -34,9 +38,15 @@ export function Hero({ negocios }: { negocios: NegocioDemo[] }) {
           </div>
           <p className={`etiqueta ${s.heroRubros}`}>Restaurantes · Carnicerías · Joyerías · Banqueterías · Eventos · Construcción</p>
         </div>
+        </div>
         <div className={s.heroDemo} id="demo">
           <Reloj />
-          <ChatDemo negocios={negocios} compacto />
+          <div className={s.escenaTelefono}>
+            <RobotHero />
+            <div data-motion="telefono" className={s.entradaTelefono}>
+              <div className={s.telefonoFrente}><ChatDemo negocios={negocios} compacto telefono /></div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -54,7 +64,7 @@ export function Banda() {
       <LogoMarca className={s.bandaC} />
       <div className={`contenedor ${s.bandaGrilla}`}>
         <div>
-          <h2 id="banda-titulo" className="titulo-seccion">La misma consulta, a la misma hora.</h2>
+          <h2 data-motion="entrada" id="banda-titulo" className="titulo-seccion">La misma consulta, a la misma hora.</h2>
           <p className={s.bandaTexto}>Un martes, 23:47: «¿Todavía despachan?». Así se ve la noche con y sin agente.</p>
         </div>
         <div className={s.linea} data-revelar>
@@ -96,19 +106,19 @@ const FUNCIONES: { icono: NombreIcono; titulo: string; texto: string }[] = [
 
 export function QueHace() {
   return (
-    <section className="seccion" id="que-hace" aria-labelledby="que-hace-titulo">
+    <section className={`seccion ${s.fondoSuave}`} id="que-hace" aria-labelledby="que-hace-titulo">
       <div className="contenedor">
-        <h2 id="que-hace-titulo" className="titulo-seccion">Qué hace el agente</h2>
-        <ul className={s.funciones}>
+        <h2 data-motion="entrada" id="que-hace-titulo" className="titulo-seccion">Qué hace el agente</h2>
+        <ul className={s.funciones} data-motion-group>
           {FUNCIONES.map((f) => (
-            <li key={f.titulo} className={s.funcion} data-revelar>
+            <li key={f.titulo} className={s.funcion} data-revelar data-motion="entrada">
               <Icono nombre={f.icono} className={s.funcionIcono} />
               <h3>{f.titulo}</h3>
               <p>{f.texto}</p>
             </li>
           ))}
         </ul>
-        <div className={s.extra}>
+        <div className={s.extra} data-motion="entrada">
           <Icono nombre="caja" className={s.extraIcono} />
           <p><b>¿Y lo de adentro?</b> También automatizamos procesos internos: pedidos, cotizaciones, inventario y agenda. Y si el negocio aún no tiene página web, también la desarrollamos.</p>
         </div>
@@ -125,11 +135,11 @@ export async function Servicios({ titulo = 'Todo lo digital para una pyme', excl
   return (
     <section className="seccion" id="servicios" aria-labelledby="servicios-titulo">
       <div className="contenedor">
-        <h2 id="servicios-titulo" className="titulo-seccion">{titulo}</h2>
+        <h2 data-motion="entrada" id="servicios-titulo" className="titulo-seccion">{titulo}</h2>
         <p className="bajada" style={{ marginTop: 12 }}>Además del chatbot, desarrollamos lo que una pyme necesita para vender en línea. Un solo equipo, con años de experiencia en web, apps y ecommerce.</p>
-        <ul className={`${s.servicios} ${destacado ? s.conDestacado : ''}`}>
+        <ul className={`${s.servicios} ${destacado ? s.conDestacado : ''}`} data-motion-group>
           {lista.map((sv) => (
-            <li key={sv.slug} data-revelar className={s.servicioItem}>
+            <li key={sv.slug} data-revelar data-motion="entrada" className={s.servicioItem}>
               <Link href={`/servicios/${sv.slug}`} className={`${s.servicio} flecha-mueve`}>
                 <Icono nombre={sv.icono} className={s.servicioIcono} />
                 <h3>{sv.nombre}</h3>
@@ -151,11 +161,11 @@ export function Rubros() {
   return (
     <section className="seccion" id="rubros" aria-labelledby="rubros-titulo">
       <div className="contenedor">
-        <h2 id="rubros-titulo" className="titulo-seccion">Rubros que atendemos</h2>
+        <h2 data-motion="entrada" id="rubros-titulo" className="titulo-seccion">Rubros que atendemos</h2>
         <p className="bajada" style={{ marginTop: 12 }}>Cada rubro tiene sus preguntas de siempre. Así responde el agente en cada uno.</p>
-        <ul className={s.rubros}>
+        <ul className={s.rubros} data-motion-group>
           {RUBROS.map((r) => (
-            <li key={r.slug}>
+            <li key={r.slug} data-motion="entrada">
               <Link href={`/rubros/${r.slug}`} className={`${s.rubro} flecha-mueve`}>
                 <Icono nombre={r.icono} className={s.rubroIcono} />
                 <span className={s.rubroTexto}>
@@ -180,12 +190,12 @@ const PASOS = [
 
 export function ComoFunciona() {
   return (
-    <section className="seccion" id="como-funciona" aria-labelledby="como-titulo">
+    <section className={`seccion ${s.fondoSuave}`} id="como-funciona" aria-labelledby="como-titulo">
       <div className="contenedor">
-        <h2 id="como-titulo" className="titulo-seccion">Cómo funciona</h2>
-        <ol className={s.pasos}>
+        <h2 data-motion="entrada" id="como-titulo" className="titulo-seccion">Cómo funciona</h2>
+        <ol className={s.pasos} data-motion-group>
           {PASOS.map((p, i) => (
-            <li key={p.titulo} className={s.paso}>
+            <li key={p.titulo} className={s.paso} data-motion="entrada">
               <span className={s.pasoN}>Paso {i + 1}</span>
               <h3>{p.titulo}</h3>
               <p>{p.texto}</p>
@@ -206,23 +216,38 @@ export async function Precios({ conTitulo = true, conOtros = false }: { conTitul
   return (
     <section className="seccion" id="precios" aria-labelledby={conTitulo ? 'precios-titulo' : undefined}>
       <div className="contenedor">
-        {conTitulo && <h2 id="precios-titulo" className="titulo-seccion">Precios del agente</h2>}
-        <div className={s.precios}>
-          {tarjetas.map((t, i) => (
-            <article key={t.titulo} className={`${s.precio} ${i === 1 ? s.precioNegro : ''}`}>
-              <h3>{t.titulo}</h3>
-              {t.precio.desde === null ? (
-                <p className={s.monto}>A cotizar</p>
-              ) : (
-                <p className={s.monto}><span className={s.desde}>desde</span> {pesos(t.precio.desde)} <span className={s.periodo}>+ IVA · {t.precio.periodo}</span></p>
-              )}
-              <ul>
-                {t.detalle.map((d) => <li key={d}>{d}</li>)}
-              </ul>
-            </article>
-          ))}
+        <div className={s.preciosCabecera} data-motion="entrada">
+          {conTitulo && <h2 id="precios-titulo" className="titulo-seccion">Precios del agente</h2>}
+          <p>Un pago para implementarlo. Una mensualidad para mantenerlo.</p>
         </div>
-        <p className={s.notaPrecios}>{NOTA_PRECIOS}</p>
+        <div className={s.preciosBloque} data-motion="entrada">
+          <div className={s.precios}>
+            {tarjetas.map((t, i) => (
+              <article key={t.titulo} className={`${s.precio} ${i === 1 ? s.precioNegro : ''}`}>
+                <h3><span>{String(i + 1).padStart(2, '0')} · </span>{t.titulo}</h3>
+                <div className={s.precioValor}>
+                  {t.precio.desde === null ? (
+                    <p className={s.monto}>A cotizar</p>
+                  ) : (
+                    <>
+                      <p className={s.monto}><span className={s.desde}>desde</span>{pesos(t.precio.desde)}</p>
+                      <p className={s.periodo}>+ IVA · {t.precio.periodo}</p>
+                    </>
+                  )}
+                </div>
+                <ul>
+                  {t.detalle.map((d) => <li key={d}><DobleCheck /><span>{d}</span></li>)}
+                </ul>
+              </article>
+            ))}
+          </div>
+          <div className={s.preciosAccion}>
+            <p className={s.notaPrecios}>{NOTA_PRECIOS}</p>
+            <a className="btn btn-primario" href={enlaceWhatsapp('Hola, quiero cotizar un agente para mi negocio')} target="_blank" rel="noopener noreferrer">
+              Cotizar mi agente <Flecha />
+            </a>
+          </div>
+        </div>
         {conOtros ? (
           <>
             <h2 className={s.otrosTitulo}>Otros servicios</h2>
@@ -245,7 +270,7 @@ export async function Precios({ conTitulo = true, conOtros = false }: { conTitul
             </div>
           </>
         ) : (
-          <p className={s.notaPrecios}><Link href="/precios">Ver precios de webs, tiendas y más servicios</Link></p>
+          <p className={s.preciosEnlace}><Link href="/precios">Ver precios de webs, tiendas y más servicios <Flecha /></Link></p>
         )}
       </div>
     </section>
@@ -258,8 +283,8 @@ export async function Preguntas() {
   return (
     <section className="seccion" id="preguntas" aria-labelledby="preguntas-titulo">
       <div className={`contenedor ${s.preguntasGrilla}`}>
-        <h2 id="preguntas-titulo" className="titulo-seccion">Preguntas frecuentes</h2>
-        <div className={s.preguntas}>
+        <h2 data-motion="entrada" id="preguntas-titulo" className="titulo-seccion">Preguntas frecuentes</h2>
+        <div className={s.preguntas} data-motion="entrada">
           {preguntas.map((q) => (
             <details key={q.p} className={s.pregunta}>
               <summary>{q.p}<span className={s.mas} aria-hidden="true" /></summary>
@@ -275,7 +300,7 @@ export async function Preguntas() {
 export function Laudus() {
   return (
     <section className={s.laudus} aria-labelledby="laudus-titulo">
-      <div className={`contenedor ${s.laudusFila}`}>
+      <div className={`contenedor ${s.laudusFila}`} data-motion="entrada">
         <Image src="/image/laudus-logo.png" alt="Laudus ERP" width={120} height={31} className={s.laudusLogo} />
         <div>
           <h2 id="laudus-titulo" className={s.laudusTitulo}>Partners de Laudus ERP</h2>
@@ -294,10 +319,10 @@ export function Cierre() {
     <section className={`seccion ${s.cierre}`} aria-labelledby="cierre-titulo">
       <div className={`contenedor ${s.cierreFila}`}>
         <div>
-          <h2 id="cierre-titulo" className="titulo-seccion">¿Conversamos?</h2>
+          <h2 data-motion="entrada" id="cierre-titulo" className="titulo-seccion">¿Conversamos?</h2>
           <p className="bajada" style={{ marginTop: 12 }}>Una breve conversación basta para saber qué le conviene a cada negocio. Respondemos rápido, como corresponde.</p>
         </div>
-        <div className={s.cierreBotones}>
+        <div className={s.cierreBotones} data-motion="entrada">
           <a className="btn btn-primario" href={enlaceWhatsapp()} target="_blank" rel="noopener noreferrer">Escríbenos por WhatsApp <Flecha /></a>
           <Link className="btn btn-secundario" href="/contacto">Dejar mis datos</Link>
         </div>

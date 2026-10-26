@@ -1,4 +1,4 @@
-.pie { background: var(--negro); color: #b9bec7; padding-block: 56px 28px; --logo-c: var(--blanco); }
+.pie { position: relative; isolation: isolate; overflow: hidden; background: radial-gradient(ellipse at 100% 100%, rgb(74 143 231 / 10%), transparent 55%), var(--negro); color: #b9bec7; padding-block: 56px 28px; --logo-c: var(--blanco); box-shadow: inset 0 1px rgb(74 143 231 / 18%); }
 .grilla { display: grid; gap: 36px; grid-template-columns: 1fr; }
 @media (min-width: 720px) { .grilla { grid-template-columns: 1fr 1fr; } }
 @media (min-width: 1000px) { .grilla { grid-template-columns: 1.4fr 1fr 1fr 1fr 0.8fr; } }
@@ -8,8 +8,19 @@
 .titulo { font-family: var(--f-mono); font-size: 12px; font-weight: 500; color: #8b919c; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 12px; }
 .pie ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
 .pie ul a { color: var(--blanco); text-decoration: none; font-size: 15px; }
-.pie ul a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.pie ul a:hover, .pie ul a:focus-visible { color: #a9ccff; text-decoration: underline; text-underline-offset: 3px; }
 .base {
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
   margin-top: 48px; padding-top: 20px; border-top: 1px solid #2c2e33; font-size: 13px;
 }
+
+.marcaAgua {
+  position: absolute; z-index: -1; right: -85px; bottom: -135px;
+  width: 330px; height: auto; pointer-events: none;
+  --logo-c: #17191d; --logo-a: #171c24;
+}
+@media (min-width: 1000px) {
+  .marcaAgua { width: 510px; right: -115px; bottom: -210px; }
+}
+
+.marcaAguaEntrada { position: absolute; inset: 0; z-index: -1; pointer-events: none; }

@@ -29,8 +29,8 @@ export function horaSantiago(fecha = new Date()) {
 let siguienteId = 1;
 const conId = (l: Omit<Linea, 'id'>): Linea => ({ ...l, id: siguienteId++ });
 
-export function ChatDemo({ negocios, compacto = false, inicial, idCampo = 'demo-mensaje' }: {
-  negocios: NegocioDemo[]; compacto?: boolean; inicial?: string; idCampo?: string;
+export function ChatDemo({ negocios, compacto = false, telefono = false, soloEjemplo = false, inicial, idCampo = 'demo-mensaje' }: {
+  negocios: NegocioDemo[]; compacto?: boolean; telefono?: boolean; soloEjemplo?: boolean; inicial?: string; idCampo?: string;
 }) {
   const [slug, setSlug] = useState(negocios.some((n) => n.slug === inicial) ? inicial! : negocios[0].slug);
   const [lineas, setLineas] = useState<Linea[]>([]);
@@ -42,11 +42,12 @@ export function ChatDemo({ negocios, compacto = false, inicial, idCampo = 'demo-
   const respuestas = lineas.filter((l) => l.de === 'agente' && !l.error).length;
 
   useEffect(() => {
+    if (soloEjemplo) return;
     lista.current?.scrollTo({ top: lista.current.scrollHeight, behavior: 'smooth' });
-  }, [lineas, esperando]);
+  }, [lineas, esperando, soloEjemplo]);
 
   function cambiarRubro(nuevo: string) {
-    if (nuevo === slug || esperando) return;
+    if (nuevo === slug || esperando || soloEjemplo) return;
     setSlug(nuevo);
     setLineas([]);
     setUsadas([]);
@@ -55,7 +56,7 @@ export function ChatDemo({ negocios, compacto = false, inicial, idCampo = 'demo-
 
   async function enviar(mensaje: string) {
     const limpio = mensaje.trim().slice(0, MAX_CARACTERES);
-    if (!limpio || esperando) return;
+    if (!limpio || esperando || soloEjemplo) return;
     const historial = [...lineas.filter((l) => !l.error), conId({ de: 'cliente', texto: limpio, hora: horaSantiago() })];
     setLineas(historial);
     setTexto('');
@@ -92,21 +93,40 @@ export function ChatDemo({ negocios, compacto = false, inicial, idCampo = 'demo-
   const sugeridas = negocio.sugeridas.filter((p) => !usadas.includes(p));
 
   return (
-    <div className={`${s.envoltura} ${compacto ? s.compacto : ''}`}>
+    <div className={`${s.envoltura} ${compacto ? s.compacto : ''} ${telefono ? s.telefono : ''}`}>
       <div className={s.chat}>
+        <div className={s.pantalla}>
+        {telefono && (
+          <div className={s.estadoTelefono} aria-hidden="true">
+            <span>13:35</span><span className={s.isla} /><span className={s.conexion}>
+              <svg viewBox="0 0 32 16" fill="currentColor"><rect x="1" y="10" width="3" height="5" rx="1" /><rect x="6" y="7" width="3" height="8" rx="1" /><rect x="11" y="3" width="3" height="12" rx="1" /><path d="M18 6q6-6 12 0l-2 2q-4-4-8 0zm3 4q3-3 6 0l-3 4z" /></svg>
+              <span className={s.bateria} />
+            </span>
+          </div>
+        )}
         <div className={s.cabecera}>
+          {telefono && <span className={s.atrasTelefono} aria-hidden="true">‹</span>}
           <span className={s.avatar} aria-hidden="true">{negocio.iniciales}</span>
           <div className={s.quien}>
             <b>{negocio.nombre}</b>
-            <small>{esperando ? 'escribiendo…' : 'agente de atención · responde al instante'}</small>
+            <small>{soloEjemplo ? 'Conversación de ejemplo' : esperando ? 'escribiendo…' : telefono ? 'Agente IA · en línea' : 'agente de atención · responde al instante'}</small>
           </div>
+          {telefono && <svg className={s.iconoLlamada} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><path d="m7 3 3 5-2 2c1 3 3 5 6 6l2-2 5 3-1 3c-1 3-8 0-12-4S1 5 4 4z" /></svg>}
           <span className={s.etiqueta}>Ejemplo</span>
         </div>
 
-        <div className={s.rubros} role="group" aria-label="Negocio de ejemplo">
+        {telefono ? (
+          <label className={s.selectorNegocio}>
+            <span>Negocio de ejemplo</span>
+            <select value={slug} onChange={(e) => cambiarRubro(e.target.value)} disabled={esperando || soloEjemplo}>
+              {negocios.map((n) => <option key={n.slug} value={n.slug}>{n.corto}</option>)}
+            </select>
+          </label>
+        ) : <div className={s.rubros} role="group" aria-label="Negocio de ejemplo">
           {negocios.map((n) => (
             <button
               key={n.slug}
+              disabled={esperando || soloEjemplo}
               type="button"
               aria-pressed={n.slug === slug}
               className={s.rubro}
@@ -115,13 +135,13 @@ export function ChatDemo({ negocios, compacto = false, inicial, idCampo = 'demo-
               {n.corto}
             </button>
           ))}
-        </div>
+        </div>}
 
         <div className={s.mensajes} ref={lista} aria-live="polite" aria-relevant="additions">
           {negocio.ejemplo.map((m, i) => (
             <Burbuja key={`ej-${slug}-${i}`} de={m.de} texto={m.texto} hora={m.hora} />
           ))}
-          <p className={s.separador}><span>Ahora pruebe usted, como si fuera cliente</span></p>
+          <p className={s.separador}><span>{soloEjemplo ? 'Ejemplo ilustrativo' : telefono ? 'Ahora prueba tú' : 'Ahora pruebe usted, como si fuera cliente'}</span></p>
           {lineas.map((l) => (
             <Burbuja key={l.id} {...l} nuevo />
           ))}
@@ -140,7 +160,7 @@ export function ChatDemo({ negocios, compacto = false, inicial, idCampo = 'demo-
         {sugeridas.length > 0 && (
           <div className={s.sugeridas}>
             {sugeridas.map((p) => (
-              <button key={p} type="button" className={s.sugerida} disabled={esperando}
+              <button key={p} type="button" className={s.sugerida} disabled={esperando || soloEjemplo}
                 onClick={() => { setUsadas((u) => [...u, p]); enviar(p); }}>
                 {p}
               </button>
@@ -149,20 +169,24 @@ export function ChatDemo({ negocios, compacto = false, inicial, idCampo = 'demo-
         )}
 
         <form className={s.entrada} onSubmit={(e) => { e.preventDefault(); enviar(texto); }}>
+          {telefono && <button type="button" disabled={soloEjemplo} className={s.masTelefono} aria-label="Escribir una pregunta" onClick={() => document.getElementById(idCampo)?.focus()}>+</button>}
           <label htmlFor={idCampo} className="sr-only">Mensaje para el agente</label>
           <input
             id={idCampo}
             value={texto}
+            disabled={soloEjemplo}
             onChange={(e) => setTexto(e.target.value)}
             maxLength={MAX_CARACTERES}
-            placeholder="Escriba su pregunta…"
+            placeholder={soloEjemplo ? 'Conversación de ejemplo' : telefono ? 'Escribe un mensaje…' : 'Escriba su pregunta…'}
             autoComplete="off"
             enterKeyHint="send"
           />
-          <button type="submit" className={s.enviar} disabled={esperando || !texto.trim()} aria-label="Enviar mensaje">
+          <button type="submit" className={s.enviar} disabled={soloEjemplo || esperando || !texto.trim()} aria-label="Enviar mensaje">
             <Flecha />
           </button>
         </form>
+        {telefono && <div className={s.zonaSegura} aria-hidden="true"><span /></div>}
+        </div>
       </div>
       <p className={s.aviso}>
         Negocio ficticio, solo de ejemplo. No escribas datos personales. <Link href="/terminos-demo">Términos de la demo</Link>

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { LogoMarca } from './Logo';
+import { ProgresoScroll } from './ProgresoScroll';
 import { Flecha } from './Iconos';
 import { MENU, enlaceWhatsapp } from '@/content/sitio';
 import s from './Nav.module.css';
@@ -39,6 +40,7 @@ export function Nav() {
           </nav>
         </details>
       </div>
+      <ProgresoScroll />
     </header>
   );
 }

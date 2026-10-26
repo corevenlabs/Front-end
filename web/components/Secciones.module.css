@@ -2,13 +2,14 @@
 .hero { padding-block: 20px 48px; }
 .heroGrilla {
   display: grid; gap: 14px;
-  grid-template-areas: 'etiqueta' 'titulo' 'demo' 'texto';
+  grid-template-columns: minmax(0, 1fr); gap: 32px;
 }
-.heroEtiqueta { grid-area: etiqueta; }
+.heroContenido { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+.heroEtiqueta { line-height: 1.5; }
 .heroTitulo {
-  grid-area: titulo;
-  font-family: var(--f-titulo); font-weight: 800; font-stretch: var(--ancho-titulo);
-  font-size: clamp(27px, 7.6vw, 64px); line-height: 1.02; letter-spacing: -0.03em;
+
+  font-family: var(--f-titulo); font-weight: 800; font-stretch: 114%;
+  font-size: clamp(27px, 7.6vw, 64px); line-height: 1.08; letter-spacing: -0.028em;
 }
 .sello {
   display: inline-flex; align-items: center; gap: 3px; vertical-align: middle;
@@ -17,9 +18,9 @@
 }
 .selloCheck { width: 18px; height: 12px; }
 .sello::after { content: attr(data-hora); }
-.heroDemo { grid-area: demo; display: flex; flex-direction: column; gap: 10px; min-width: 0; margin-top: 4px; }
-.heroTexto { grid-area: texto; display: flex; flex-direction: column; gap: 18px; margin-top: 18px; }
-.heroBajada { font-size: 18px; color: var(--texto-cuerpo); max-width: 36em; }
+.heroDemo {  display: flex; flex-direction: column; gap: 10px; min-width: 0; margin-top: 4px; align-items: center; }
+.heroTexto {  display: flex; flex-direction: column; gap: 18px; margin-top: 18px; }
+.heroBajada { font-size: 18px; line-height: 1.6; font-weight: 400; color: var(--texto-cuerpo); max-width: 54ch; text-wrap: pretty; }
 .heroBotones { display: flex; flex-direction: column; gap: 10px; }
 .heroRubros { line-height: 1.6; }
 
@@ -27,18 +28,20 @@
   .heroBotones { flex-direction: row; flex-wrap: wrap; }
 }
 @media (min-width: 1000px) {
-  .hero { padding-block: 64px 88px; }
+  .hero { padding-block: 40px 64px; }
   .heroGrilla {
-    grid-template-columns: minmax(0, 1fr) 440px; column-gap: 64px; row-gap: 22px;
-    grid-template-areas: 'etiqueta demo' 'titulo demo' 'texto demo';
-    align-items: start;
+    grid-template-columns: minmax(0, 1fr) 290px; gap: 40px;
+    align-items: center;
   }
-  .heroEtiqueta { align-self: end; }
+  .heroContenido { gap: 24px; container-type: inline-size; }
+  .heroTitulo { font-size: clamp(32px, 6.8cqi, 50px); line-height: 1.1; text-wrap: initial; }
+  .heroLinea { display: block; white-space: nowrap; }
   .heroTexto { margin-top: 0; gap: 24px; }
   .heroBajada { font-size: 19px; }
   .sello { font-size: 18px; }
   .selloCheck { width: 22px; height: 14px; }
   .heroDemo { margin-top: 0; }
+  .heroDemo :global(.reloj) { max-width: 320px; font-size: 12px; }
 }
 
 /* ---------- Banda negra: sin agente / con agente ---------- */
@@ -83,7 +86,7 @@
 @media (min-width: 640px) { .funciones { grid-template-columns: 1fr 1fr; } }
 @media (min-width: 1000px) { .funciones { grid-template-columns: repeat(3, 1fr); gap: 44px 48px; } }
 .funcion { display: flex; flex-direction: column; gap: 8px; }
-.funcion h3 { font-size: 19px; font-stretch: 108%; }
+.funcion h3 { font-size: 19px; font-weight: 700; font-stretch: 104%; line-height: 1.3; letter-spacing: -.012em; }
 .funcion p { color: #3a3e46; }
 .funcionIcono { width: 40px; height: 40px; margin-bottom: 6px; }
 :global(:root[data-js]) .funcion:not(:global(.entra)) :global(.icono-acento) { stroke-dasharray: 1; stroke-dashoffset: 1; }
@@ -110,8 +113,8 @@
   transition: border-color var(--rapido);
 }
 .servicio:hover { border-color: var(--negro); }
-.servicio h3 { font-size: 18px; font-stretch: 108%; }
-.servicio p { color: #3a3e46; font-size: 15px; flex: 1; }
+.servicio h3 { font-size: 18px; font-weight: 700; font-stretch: 104%; line-height: 1.3; letter-spacing: -.012em; }
+.servicio p { color: #3a3e46; font-size: 15.5px; line-height: 1.6; text-wrap: pretty; flex: 1; }
 .servicioIcono { width: 36px; height: 36px; margin-bottom: 6px; }
 .servicioPrecio { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; padding-top: 12px; border-top: 1px solid var(--gris-linea); font-family: var(--f-mono); font-size: 13px; color: var(--azul-accion); }
 .servicio:hover .rubroFlecha { transform: translate(2px, -2px); }
@@ -144,7 +147,7 @@
 /* ---------- Cómo funciona ---------- */
 .pasos { list-style: none; margin: 32px 0 0; padding: 0; display: grid; grid-template-columns: 1fr; border-top: var(--borde); }
 .paso { display: flex; flex-direction: column; gap: 8px; padding: 22px 0; border-bottom: 1px solid var(--gris-linea); }
-.paso h3 { font-size: 19px; font-stretch: 108%; }
+.paso h3 { font-size: 19px; font-weight: 700; font-stretch: 104%; line-height: 1.3; letter-spacing: -.012em; }
 .paso p { color: #3a3e46; }
 .pasoN { font-family: var(--f-mono); font-size: 13px; font-weight: 600; color: var(--azul-accion); }
 @media (min-width: 900px) {
@@ -154,16 +157,38 @@
 }
 
 /* ---------- Precios ---------- */
-.precios { display: grid; gap: 12px; margin-top: 28px; grid-template-columns: 1fr; max-width: 900px; }
-@media (min-width: 700px) { .precios { grid-template-columns: 1fr 1fr; } }
-.precio { border: var(--borde); border-radius: 12px; padding: 22px; display: flex; flex-direction: column; gap: 10px; }
-.precio h3 { font-size: 15px; font-weight: 600; color: var(--gris-texto); }
+.preciosCabecera { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+.preciosCabecera > p { max-width: 44ch; color: var(--gris-texto); font-size: 15px; line-height: 1.5; }
+.preciosBloque { overflow: hidden; border: 1px solid var(--gris-linea); border-radius: 14px; background: var(--blanco); }
+.precios { display: grid; grid-template-columns: minmax(0, 1fr); }
+.precio { min-width: 0; padding: 26px 22px; display: flex; flex-direction: column; gap: 18px; color: var(--negro); }
+.precio h3 { font-size: 22px; font-weight: 750; line-height: 1.2; letter-spacing: -.02em; }
 .precioNegro { background: var(--negro); color: var(--blanco); }
-.precioNegro h3, .precioNegro .periodo, .precioNegro .desde { color: #a3a9b4; }
-.monto { font-family: var(--f-titulo); font-weight: 800; font-stretch: 112%; font-size: 34px; letter-spacing: -0.02em; line-height: 1.1; }
-.desde, .periodo { font-family: var(--f-mono); font-size: 12px; font-weight: 500; letter-spacing: 0; color: var(--gris-texto); }
-.precio ul { margin: 6px 0 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; font-size: 15px; }
-.notaPrecios { margin-top: 16px; font-size: 14px; color: var(--gris-texto); }
+.precioValor { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 14px; }
+.monto { font-family: var(--f-titulo); font-weight: 800; font-stretch: 110%; font-size: clamp(34px, 4vw, 48px); letter-spacing: -.025em; line-height: 1.05; }
+.desde { display: block; margin-bottom: 6px; }
+.desde, .periodo { font-family: var(--f-cuerpo); font-size: 13px; font-weight: 400; letter-spacing: 0; color: var(--gris-texto); line-height: 1.45; }
+.periodo { padding-bottom: 3px; }
+.precioNegro .periodo, .precioNegro .desde { color: #b9bec7; }
+.precio ul { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; font-size: 15px; line-height: 1.55; }
+.precio li { display: flex; align-items: flex-start; gap: 11px; }
+.precio li svg { width: 18px; height: 13px; flex: none; margin-top: 5px; color: currentColor; }
+.preciosAccion { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; padding: 20px 22px; border-top: 1px solid var(--gris-linea); }
+.notaPrecios { margin: 0; max-width: 70ch; font-size: 13px; line-height: 1.6; color: var(--gris-texto); }
+.preciosAccion :global(.btn) { flex-shrink: 0; }
+.preciosEnlace { margin-top: 18px; text-align: center; font-size: 14px; }
+.preciosEnlace a { display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-underline-offset: 4px; }
+.preciosEnlace svg { width: 13px; height: 13px; flex: none; }
+@media (min-width: 700px) {
+  .precios { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .precio { padding: 30px; }
+  .precioValor { min-height: 79px; }
+}
+@media (min-width: 1000px) {
+  .preciosCabecera { flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 32px; }
+  .precio { padding: 32px 34px; }
+  .preciosAccion { flex-direction: row; align-items: center; justify-content: space-between; padding: 20px 34px; gap: 32px; }
+}
 
 /* ---------- Preguntas ---------- */
 .preguntasGrilla { display: grid; gap: 28px; }
@@ -171,6 +196,7 @@
 .preguntas { border-top: var(--borde); }
 .pregunta { border-bottom: 1px solid var(--gris-linea); }
 .pregunta summary {
+  line-height: 1.45; letter-spacing: -.01em;
   list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px;
   padding: 18px 0; font-weight: 600; font-size: 17px; min-height: 56px;
 }
@@ -199,4 +225,148 @@
 @media (min-width: 900px) {
   .cierreFila { flex-direction: row; justify-content: space-between; align-items: flex-end; }
   .cierreBotones { flex-direction: row; }
+}
+
+/* En escritorio, la demo acompaña al título con una escala más compacta. */
+@media (min-width: 1000px) {
+  .heroDemo { zoom: .9; }
+}
+
+/* Flotación suave del teléfono, sin mover el texto ni el reloj. */
+@keyframes flotarTelefono {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .telefonoFrente { animation: flotarTelefono 6s ease-in-out infinite; }
+  .telefonoFrente:hover,
+  .telefonoFrente:focus-within { animation-play-state: paused; }
+}
+
+/* Demo interactiva del hero. */
+.escenaTelefono { position: relative; width: 100%; max-width: 320px; isolation: isolate; }
+.telefonoFrente { position: relative; z-index: 2; }
+
+/* Capa alfa detrás del iPhone: el borde de aparición coincide con el bisel izquierdo. */
+.robotTransparente {
+  --robot-recorrido: -59px;
+  position: absolute; z-index: 1; left: -47px; bottom: 60px;
+  width: 128px; aspect-ratio: 9 / 16; pointer-events: none; opacity: 0;
+  transform: translateX(var(--robot-recorrido));
+}
+.robotTransparente[data-visible='true'] { opacity: 1; }
+.robotPoster { object-fit: contain; }
+.robotTransparente video { position: relative; display: block; width: 100%; height: 100%; background: transparent; opacity: 0; }
+.robotTransparente[data-animado='true'] video { opacity: 1; }
+.robotTransparente[data-animado='true'] .robotPoster { opacity: 0; }
+@keyframes salidaRobotVideo {
+  0%, 17% { transform: translateX(0); }
+  100% { transform: translateX(var(--robot-recorrido)); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .robotTransparente[data-animado='true'] { animation: salidaRobotVideo 2.8s ease-in-out both; }
+}
+
+@media (max-width: 480px) {
+  .escenaTelefono { width: calc(100% - 40px); max-width: 280px; margin-left: 40px; }
+  .robotTransparente { --robot-recorrido: -40px; width: 96px; left: -35px; bottom: 64px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :global([data-home-motion]) .servicio,
+  :global([data-home-motion]) .rubro {
+    transition: transform 200ms var(--suave), box-shadow 200ms var(--suave), border-color 160ms;
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  :global([data-home-motion]) .servicio:hover,
+  :global([data-home-motion]) .rubro:hover { transform: translateY(-3px); box-shadow: 0 8px 20px -15px #10203466; }
+}
+
+/* Entrada del hero: el título se revela y el iPhone llega desde la derecha. */
+.hero { overflow-x: clip; }
+@media (prefers-reduced-motion: no-preference) {
+  .hero .heroTitulo[data-motion-ready='true']:not(:global(.motion-visible)) { opacity: 0; transform: translateY(18px); }
+  .entradaTelefono[data-motion-ready='true'] { transition-duration: 650ms; }
+  .entradaTelefono[data-motion-ready='true']:not(:global(.motion-visible)) { opacity: 0; transform: translateX(40px); }
+}
+
+/* Keyframes explícitos: no dependen de una transición entre dos pintados. */
+@keyframes aparecerTituloHero {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes entrarIphoneHero {
+  from { opacity: 0; transform: translateX(64px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero .heroTitulo[data-motion-ready='true']:global(.motion-visible) {
+    animation: aparecerTituloHero 1200ms cubic-bezier(.25, .7, .3, 1) both;
+    transition: none;
+  }
+  .hero .entradaTelefono[data-motion-ready='true']:global(.motion-visible) {
+    animation: entrarIphoneHero 1500ms 180ms cubic-bezier(.25, .7, .3, 1) both;
+    transition: none;
+  }
+}
+
+.entradaTelefono { position: relative; z-index: 2; }
+
+/* Ritmo de fondos con los colores existentes de la marca. */
+.fondoSuave { background: var(--gris-fondo); }
+.fondoSuave .extra { background: var(--blanco); }
+.hero .escenaTelefono::before {
+  content: ''; position: absolute; z-index: 0;
+  inset: -8% -40% -4%; pointer-events: none;
+  background: radial-gradient(ellipse at center, rgb(74 143 231 / 12%) 0%, rgb(74 143 231 / 5%) 42%, transparent 72%);
+}
+@media (max-width: 480px) {
+  .hero .escenaTelefono::before { inset: -5% -16%; }
+}
+
+/* Acabado de las secciones. La escena del iPhone y el robot conservan sus estilos. */
+.heroBotones :global(.btn-primario),
+.cierreBotones :global(.btn-primario),
+.preciosAccion :global(.btn-primario) { box-shadow: var(--sombra-accion); }
+
+.banda {
+  background: radial-gradient(ellipse at 85% 100%, rgb(74 143 231 / 8%), transparent 60%), var(--negro);
+  box-shadow: inset 0 1px rgb(255 255 255 / 7%), inset 0 -1px rgb(74 143 231 / 14%);
+}
+.punto { box-shadow: 0 0 0 5px rgb(74 143 231 / 10%), 0 0 18px rgb(74 143 231 / 18%); }
+.fondoSuave { background: linear-gradient(115deg, var(--gris-fondo), var(--superficie-azul)); }
+.funcionIcono, .servicioIcono, .rubroIcono { filter: drop-shadow(0 3px 5px rgb(74 143 231 / 12%)); }
+.extra { border-color: var(--borde-acento); box-shadow: var(--sombra-suave); }
+.servicio { background: var(--blanco); box-shadow: var(--sombra-suave); }
+.servicio:hover, .servicio:focus-visible { border-color: var(--azul-accion); box-shadow: var(--sombra-elevada); }
+.conDestacado .servicioItem:first-child .servicio {
+  background: radial-gradient(ellipse at 100% 0%, rgb(74 143 231 / 14%), transparent 75%), var(--negro);
+  box-shadow: var(--sombra-elevada);
+}
+.conDestacado .servicioItem:first-child .servicio:hover,
+.conDestacado .servicioItem:first-child .servicio:focus-visible { border-color: var(--azul); }
+.rubro:hover, .rubro:focus-visible { background: var(--superficie-azul); box-shadow: inset 3px 0 var(--azul); }
+.pasos { border-top-color: var(--azul-accion); }
+.pasoN { text-shadow: 0 2px 12px rgb(74 143 231 / 15%); }
+.preciosBloque { border-color: var(--borde-acento); box-shadow: var(--sombra-elevada); }
+.precioNegro { background: radial-gradient(ellipse at 100% 0%, rgb(74 143 231 / 12%), transparent 70%), var(--negro); }
+.preciosAccion { background: var(--superficie-azul); }
+.tablaPrecios th { border-bottom-color: var(--azul-accion); }
+.tablaPrecios tbody tr:hover { background: var(--superficie-azul); }
+.preguntas { border-top-color: var(--azul-accion); }
+.pregunta summary:hover { color: var(--azul-accion); }
+.pregunta[open] { background: linear-gradient(90deg, var(--superficie-azul), transparent); }
+.pregunta[open] .mas::before, .pregunta[open] .mas::after { background: var(--azul-accion); }
+.laudus { background: linear-gradient(110deg, var(--blanco) 45%, var(--superficie-azul)); }
+.cierre { background: linear-gradient(115deg, var(--superficie-azul), var(--gris-fondo)); border-top-color: var(--borde-acento); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .servicio { transition: border-color 180ms, box-shadow 180ms var(--suave); }
+  .rubro { transition: background 180ms, box-shadow 180ms; }
+  .pregunta summary { transition: color var(--rapido); }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  :global([data-home-motion]) .servicio:hover { box-shadow: var(--sombra-elevada); }
+  :global([data-home-motion]) .rubro:hover { transform: none; box-shadow: inset 3px 0 var(--azul); }
 }

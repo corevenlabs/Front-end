@@ -55,6 +55,7 @@ export default async function Inicio() {
   return (
     <>
       <JsonLd datos={preguntas.length ? [sitio, negocio(whatsapp), faq(preguntas)] : [sitio, negocio(whatsapp)]} />
+      <div data-home-motion>
       <Hero negocios={negociosParaDemo()} />
       <Banda />
       <QueHace />
@@ -65,6 +66,7 @@ export default async function Inicio() {
       <Preguntas />
       <Laudus />
       <Cierre />
+      </div>
     </>
   );
 }
