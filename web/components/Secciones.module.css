@@ -256,9 +256,6 @@
 }
 .robotTransparente[data-visible='true'] { opacity: 1; }
 .robotPoster { object-fit: contain; }
-.robotTransparente video { position: relative; display: block; width: 100%; height: 100%; background: transparent; opacity: 0; }
-.robotTransparente[data-animado='true'] video { opacity: 1; }
-.robotTransparente[data-animado='true'] .robotPoster { opacity: 0; }
 @keyframes salidaRobotVideo {
   0%, 17% { transform: translateX(0); }
   100% { transform: translateX(var(--robot-recorrido)); }
@@ -267,9 +264,10 @@
   .robotTransparente[data-animado='true'] { animation: salidaRobotVideo 2.8s ease-in-out both; }
 }
 
-@media (max-width: 480px) {
-  .escenaTelefono { width: calc(100% - 40px); max-width: 280px; margin-left: 40px; }
-  .robotTransparente { --robot-recorrido: -40px; width: 96px; left: -35px; bottom: 64px; }
+@media (max-width: 767px) {
+  .hero .escenaTelefono { width: 100%; max-width: 320px; margin-inline: auto; }
+  .robotTransparente { display: none; }
+  .telefonoFrente { animation: none; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
